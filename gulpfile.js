@@ -116,8 +116,7 @@ gulp.task('copy:public', ['clean', 'sass'], function() {
 
 
 // cache busters
-var bustSrc =
-  gulp.task('bust', ['bust:collect', 'bust:replace']);
+var bustSrc = gulp.task('bust', ['bust:collect', 'bust:replace']);
 
 // collect resources for cache busting
 gulp.task('bust:collect', ['sass', 'webpack', 'copy'], function() {
