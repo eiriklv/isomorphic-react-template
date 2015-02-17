@@ -40,5 +40,5 @@ module.exports = {
     ]
   },
   devtool: "#inline-source-map",
-  externals: { }
+  externals: {}
 };
