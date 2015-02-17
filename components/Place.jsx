@@ -18,9 +18,9 @@ var Place = React.createClass({
     if (!place) return <NotFound />;
 
     return (
-      <DocumentTitle title={ place.name }>
+      <DocumentTitle title={place.name}>
         <div className='place'>
-          <h2>{ place.name }</h2>
+          <h2>{place.name}</h2>
           <img src={'/images/' + place.id + '.jpg'}/>
         </div>
       </DocumentTitle>
