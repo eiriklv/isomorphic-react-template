@@ -1,5 +1,5 @@
 node_modules
 build
 .sass-cache
-./public/css/main.css
-./public/css/main.css.map
+public/css/main.css
+public/css/main.css.map
