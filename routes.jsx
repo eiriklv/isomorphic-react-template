@@ -16,7 +16,7 @@ var routes = (
   <Route name='places' path='/' handler={App}>
     <DefaultRoute name='index' handler={Index} />
     <Route name='place' path='place/:id' handler={Place} />
-    <NotFoundRoute name='notfound' handler={ NotFound }/>
+    <NotFoundRoute name='notfound' handler={NotFound}/>
   </Route>
 );
 
