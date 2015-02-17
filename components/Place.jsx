@@ -8,12 +8,12 @@ var places = require('../public/data/places');
 var NotFound = require('./NotFound.jsx');
 
 var Place = React.createClass({
-  mixins: [ Router.State ],
+  mixins: [Router.State],
 
   render: function() {
     var place = places.filter(function(place) {
       return place.id === this.getParams().id;
-    })[0];
+    }.bind(this))[0];
 
     if (!place) return <NotFound />;
 
