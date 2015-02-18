@@ -12,7 +12,7 @@ module.exports = function(req, res, next) {
     
     var title = DocumentTitle.rewind();
     var markup = React.renderToString(<Handler />);
-    var html  = React.renderToStaticMarkup(<Html title={title} markup={markup} />);
+    var html = React.renderToStaticMarkup(<Html title={title} markup={markup} />);
 
     // TODO: send 404 status code 
     // (see: https://github.com/gpbl/isomorphic-react-template/issues/3)

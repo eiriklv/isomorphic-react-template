@@ -27,7 +27,7 @@ var App = React.createClass({
           </Link>
         </li>
       );
-    });
+    }.bind(this));
 
     return (
       <DocumentTitle title={title}>
