@@ -1,5 +1,7 @@
 # isomorphic-react-template
 
+**Updated with support for iojs 1.2.x and react-hot-loader 1.1.x**
+
 A starting template for building an isomorphic single page app using [react.js](http://www.reactjs.org) on [express](http://www.expressjs.com) with a [Flux](http://facebook.github.io/flux/) architecture.
 
 **Work in progress notice**
