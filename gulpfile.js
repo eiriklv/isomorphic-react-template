@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
 var gulp = require('gulp');
-var gutil = require("gulp-util");
+var gutil = require('gulp-util');
 var filter = require('gulp-filter');
 var replace = require('gulp-replace');
 var autoprefixer = require('gulp-autoprefixer');
@@ -11,7 +11,7 @@ var cachebust = new require('gulp-cachebust')();
 var fs = require('fs-extra');
 var minifyCSS = require('gulp-minify-css');
 var sass = require('gulp-ruby-sass');
-var webpack = require("webpack");
+var webpack = require('webpack');
 var webpackBuild = require('./webpack.config');
 var webpackDev = require('./webpack.config.dev');
 var notifier = require('node-notifier');
@@ -71,7 +71,7 @@ gulp.task('clean', function(callback) {
 gulp.task('webpack', ['clean'], function(callback) {
   webpack(webpackBuild, function(err, stats) {
     if (err) return notifyError(err);
-    gutil.log("[webpack]", stats.toString({
+    gutil.log('[webpack]', stats.toString({
       colors: true,
       hash: false,
       timings: false,
@@ -130,7 +130,7 @@ gulp.task('bust:collect', ['sass', 'webpack', 'copy'], function() {
 
 // replace collected resources
 gulp.task('bust:replace', ['bust:collect'], function() {
-  gutil.log("[bust:replace]", 'Busting ' + Object.keys(cachebust.mappings).length + ' asset(s)...');
+  gutil.log('[bust:replace]', 'Busting ' + Object.keys(cachebust.mappings).length + ' asset(s)...');
   return gulp.src(paths.server, {
       cwd: paths.build,
       base: paths.build
