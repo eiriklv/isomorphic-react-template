@@ -19,7 +19,7 @@ var App = React.createClass({
   },
 
   render: function() {
-    var links = this.props.places.map(function (place) {
+    var links = this.props.places.map(function(place) {
       return (
         <li key={'place-' + place.id}>
           <Link to='place' params={{ id: place.id }}>
