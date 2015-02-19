@@ -4,9 +4,12 @@ var webpack = require('webpack');
 
 module.exports = {
 
-  // Create also a "lib" chunk with common libraries, e.g. react.
+  // Create also a 'lib' chunk with common libraries, e.g. react.
   entry: {
-    lib: ['react', 'react-router'],
+    lib: [
+      'react',
+      'react-router'
+    ],
     main: './client.jsx'
   },
 
@@ -18,8 +21,8 @@ module.exports = {
 
   plugins: [
     new webpack.DefinePlugin({
-      "process.env": {
-        "NODE_ENV": JSON.stringify("production") // This has effect on the react lib size
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production') // This has effect on the react lib size
       }
     }),
     new webpack.optimize.CommonsChunkPlugin('lib', 'lib.js'),
@@ -32,13 +35,25 @@ module.exports = {
   ],
 
   resolve: {
-    extensions: ['', '.js', '.jsx']
+    extensions: [
+      '',
+      '.js',
+      '.jsx'
+    ]
   },
 
   module: {
     loaders: [{
       test: /\.jsx$/,
-      loaders: ['jsx']
+      loaders: [
+        'jsx',
+        'envify-loader'
+      ]
+    }, {
+      test: /\.js$/,
+      loaders: [
+        'envify-loader'
+      ]
     }]
   },
 

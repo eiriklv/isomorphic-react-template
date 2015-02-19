@@ -27,7 +27,11 @@ module.exports = {
 
   resolve: {
     // Allow to omit extensions when requiring these files
-    extensions: ['', '.js', '.jsx']
+    extensions: [
+      '',
+      '.js',
+      '.jsx'
+    ]
   },
 
   module: {
@@ -35,7 +39,11 @@ module.exports = {
       // Pass *.jsx files through jsx-loader transform
       {
         test: /\.jsx$/,
-        loaders: ['react-hot', 'jsx']
+        loaders: [
+          'react-hot',
+          'jsx',
+          'envify-loader'
+        ]
       }
     ]
   },
