@@ -8,14 +8,10 @@ var DocumentTitle = require('react-document-title');
 var routes = require('./routes.jsx');
 var Html = require('./components/Html.jsx');
 
-module.exports = function(req, res, next) {
+module.exports = function(req, res, next, context) {
   Router.run(routes, req.url, function(Handler, state) {
 
-    var context = {
-      name: 'Eirik',
-      age: 28
-    };
-
+    context = context || {}
     var title = DocumentTitle.rewind();
     var renderedApp = React.createElement(Handler, context);
 

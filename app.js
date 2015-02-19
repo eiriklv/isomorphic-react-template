@@ -42,7 +42,13 @@ if (app.get('env') === 'development') {
 }
 
 // use react routes (this can be used for several routes depending on what state should be fetched)
-app.use('/', serverRender);
+app.use('/', function(req, res, next) {
+  serverRender(req, res, next, {
+    text: 'hello world',
+    username: 'eiriklv',
+    token: 'fjrGSGg$G$h65h6h6$3g465j6H$#%h6'
+  });
+});
 
 // error pages
 app.use(function(err, req, res, next) {
