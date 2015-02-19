@@ -7,19 +7,21 @@ var DocumentTitle = require('react-document-title');
 var RouteHandler = Router.RouteHandler;
 var Link = Router.Link;
 
-var data = require('../public/data/places');
+var ServerStateMixin = require('../mixins/server-state');
 var title = 'Some places in Italy';
 
 var App = React.createClass({
 
-  getDefaultProps: function() {
+  mixins: [ServerStateMixin],
+
+  getServerState: function(state) {
     return {
-      places: data
-    };
+      places: state.data
+    }
   },
 
   render: function() {
-    var links = this.props.places.map(function(place) {
+    var links = this.state.places.map(function(place) {
       return (
         <li key={'place-' + place.id}>
           <Link to='place' params={{ id: place.id }}>
