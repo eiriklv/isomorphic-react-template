@@ -17,7 +17,14 @@ module.exports = function(req, res, next, context) {
 
     ReactAsync.renderToStringAsync(renderedApp, function(err, markup, data) {
       if (!markup) return next(err);
-      var html = React.renderToStaticMarkup(<Html title={title} markup={ReactAsync.injectIntoMarkup(markup, data)} />);
+      
+      var html = React.renderToStaticMarkup(
+        <Html
+          title={title}
+          markup={ReactAsync.injectIntoMarkup(markup, data)}
+        />
+      );
+
       res.send('<!DOCTYPE html>' + html);
     });
   });
