@@ -6,6 +6,8 @@ var WebpackDevServer = require('webpack-dev-server');
 var webpackConfig = require('./webpack.config.dev');
 var livereload = require('livereload');
 var fs = require('fs');
+var chokidar = require('chokidar');
+var async = require('async');
 var sass = require('node-sass');
 
 // Run the webpack dev server
@@ -28,8 +30,15 @@ var renderSass = function(filename) {
     file: __dirname + '/style/main.scss',
     outFile: __dirname + '/public/css/main.css',
     sourceMap: true,
-    success: function(css) {
+    success: function(data) {
       if (filename) debug('Changed ' + filename);
+      async.series([
+        fs.writeFile.bind(fs, __dirname + '/public/css/main.css.map', data.map, 'utf-8'),
+        fs.writeFile.bind(fs, __dirname + '/public/css/main.css', data.css, 'utf-8')
+      ], function(err) {
+        if (err) debug('error writing css/sourcemap to file:', err);
+        debug('wrote css/sourcemap to file');
+      });
     },
     error: function(error) {
       console.log(error);
@@ -37,8 +46,10 @@ var renderSass = function(filename) {
   });
 };
 
-// Watch for scss changes
-fs.watch(__dirname + '/style', function(event, filename) {
+// Watch for scss changes using chokidar (bettar than fs.watch)
+chokidar.watch(__dirname + '/style', {
+  ignored: /[\/\\]\./
+}).on('all', function(event, filename) {
   var ext = filename.split('/').pop().split('.').pop();
   if (ext !== 'scss') return;
   renderSass(filename);
