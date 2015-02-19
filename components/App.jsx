@@ -1,27 +1,40 @@
 'use strict';
 
 var React = require('react');
+var ReactAsync = require('react-async');
 var Router = require('react-router');
 var DocumentTitle = require('react-document-title');
 
 var RouteHandler = Router.RouteHandler;
 var Link = Router.Link;
 
-var ServerStateMixin = require('../mixins/server-state');
+var data = require('../public/data/places');
 var title = 'Some places in Italy';
 
 var App = React.createClass({
+  mixins: [ReactAsync.Mixin],
 
-  mixins: [ServerStateMixin],
-
-  getServerState: function(state) {
+  getDefaultProps: function() {
     return {
-      places: state.data
+      places: data
     }
   },
 
+  getInitialStateAsync: function(callback) {
+    setTimeout(
+      callback.bind(
+        null,
+        null,
+        {
+          text: 'hello world'
+        }
+      ),
+      500
+    );
+  },
+
   render: function() {
-    var links = this.state.places.map(function(place) {
+    var links = this.props.places.map(function(place) {
       return (
         <li key={'place-' + place.id}>
           <Link to='place' params={{ id: place.id }}>
@@ -35,6 +48,7 @@ var App = React.createClass({
       <DocumentTitle title={title}>
         <div className='app'>
           <h1>{title}</h1>
+          <h3>{this.state.text}</h3>
           <ul className='master'>
             {links}
             <Link to='index'>

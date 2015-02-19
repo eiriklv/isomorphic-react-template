@@ -13,7 +13,6 @@ render: function() {
         <link rel='stylesheet' href='/css/main.css' />
         <script src='/js/lib.js'></script>
         <script src='/js/main.js'></script>
-        <script dangerouslySetInnerHTML={{__html: '__serverState = ' + JSON.stringify(this.props.__serverState)}} />
       </head>
       <body dangerouslySetInnerHTML={{__html: this.props.markup}}></body>
     </html>

@@ -1,22 +1,28 @@
 'use strict';
 
 var React = require('react');
+var ReactAsync = require('react-async');
 var Router = require('react-router');
 var DocumentTitle = require('react-document-title');
 
 var routes = require('./routes.jsx');
 var Html = require('./components/Html.jsx');
 
-module.exports = function(req, res, next, serverState) {
+module.exports = function(req, res, next) {
   Router.run(routes, req.url, function(Handler, state) {
 
-    serverState = serverState || {};
-    var title = DocumentTitle.rewind();
-    var markup = React.renderToString(<Handler __serverState={serverState} />);
-    var html = React.renderToStaticMarkup(<Html title={title} markup={markup} __serverState={serverState} />);
+    var context = {
+      name: 'Eirik',
+      age: 28
+    };
 
-    // TODO: send 404 status code 
-    // (see: https://github.com/gpbl/isomorphic-react-template/issues/3)
-    res.send('<!DOCTYPE html>' + html);
+    var title = DocumentTitle.rewind();
+    var renderedApp = React.createElement(Handler, context);
+
+    ReactAsync.renderToStringAsync(renderedApp, function(err, markup, data) {
+      if (!markup) return next(err);
+      var html = React.renderToStaticMarkup(<Html title={title} markup={ReactAsync.injectIntoMarkup(markup, data)} />);
+      res.send('<!DOCTYPE html>' + html);
+    });
   });
 };

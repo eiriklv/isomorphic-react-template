@@ -13,7 +13,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cachebuster = require('./cachebuster');
 var serverRender = require('./server.jsx');
-var serverState = require('./get-server-state.js');
 
 var app = express();
 
@@ -43,12 +42,7 @@ if (app.get('env') === 'development') {
 }
 
 // use react routes (this can be used for several routes depending on what state should be fetched)
-app.use('/', function(req, res, next) {
-  serverState(function(err, state) {
-    if (err) return next(err);
-    serverRender(req, res, next, state);
-  });
-});
+app.use('/', serverRender);
 
 // error pages
 app.use(function(err, req, res, next) {
