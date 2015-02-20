@@ -23,28 +23,18 @@ function PlacesStore(initialData) {
 
     if (!place) return;
 
-    // optimistic update
     this.places.splice(this.places.indexOf(place), 1);
     this.emit('update'); // tell the listeners to refetch the places from the store
-
-    // realistic update
-    // - do some async operation via http to the api
-    // - fetch the results with the current store settings and save to store
-    // - if it fails remove the pushed data from the store
-    // this.emit('update')
   };
 
   this.addPlace = function(place) {
-    // optimistic update
     this.places.push(place);
     this.emit('update');
-
-    // realistic update
-    // - do some async operation via http to the api
-    // - fetch the results with the current store settings and save to store
-    // - if it fails remove the pushed data from the store
-    // this.emit('update')
   };
+
+  // optional way of emitting instead of calling directly
+  this.on('add', this.addPlace);
+  this.on('remove', this.removePlace);
 };
 
 module.exports = PlacesStore;

@@ -15,16 +15,6 @@ function UserStore(initialData) {
   this.getUserData = function() {
     return assign({}, this.data);
   };
-
-  this.addEvent = function(event, listener) {
-    this.eventListeners.push(listener);
-    this.on(event, listener);
-  };
-
-  this.removeEvent = function(event, listener) {
-    this.eventListeners.splice(this.eventListeners.indexOf(listener));
-    this.removeListener(event, listener);
-  };
 };
 
 module.exports = UserStore;

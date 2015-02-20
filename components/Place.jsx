@@ -9,11 +9,22 @@ const Place = React.createClass({
   mixins: [Router.State],
 
   propTypes: {
-    places: React.PropTypes.array
+    Data: React.PropTypes.shape({
+      places: React.PropTypes.array
+    }),
+    Actions: React.PropTypes.shape({
+      RemovePlace: React.PropTypes.function
+    })
+  },
+
+  handleClick: function() {
+    this.props.Actions.RemovePlace(this.getParams().id);
   },
 
   render: function() {
-    let place = this.props.places.filter(function(place) {
+    let places = this.props.Data.places;
+
+    let place = places.filter(function(place) {
       return place.id === this.getParams().id;
     }.bind(this))[0];
 
@@ -24,7 +35,7 @@ const Place = React.createClass({
     return (
       <DocumentTitle title={place.name}>
         <div className='place'>
-          <h2>{place.name}</h2>
+          <h2 onClick={this.handleClick}>{place.name}</h2>
           <img src={'/images/' + place.id + '.jpg'}/>
         </div>
       </DocumentTitle>

@@ -5,6 +5,6 @@
 
 module.exports = function(Stores) {
   return function(id) {
-    Stores.Places.removePlace(place);
+    Stores.Places.removePlace(id);
   };
 };
