@@ -10,9 +10,6 @@ const Link = Router.Link;
 
 const title = 'Some places in Italy';
 
-// example of using inlining with transform-loader + brfs
-//const inline = require('fs').readFileSync(__dirname + '/../package.json', 'utf8');
-
 const App = React.createClass({
   propTypes: {
     Stores: React.PropTypes.shape({
@@ -51,7 +48,7 @@ const App = React.createClass({
             </Link>
           </ul>
           <div className='detail'>
-            <RouteHandler />
+            <RouteHandler places={this.state.places} />
           </div>
         </div>
       </DocumentTitle>

@@ -10,6 +10,10 @@ const NotFound = require('./NotFound.jsx');
 const Place = React.createClass({
   mixins: [Router.State],
 
+  propTypes: {
+    places: React.PropTypes.array
+  },
+
   render: function() {
     let place = places.filter(function(place) {
       return place.id === this.getParams().id;
