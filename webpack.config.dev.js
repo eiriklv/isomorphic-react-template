@@ -1,4 +1,4 @@
-var webpack = require('webpack');
+const webpack = require('webpack');
 
 module.exports = {
   // Entry point for static analyzer:
@@ -37,24 +37,28 @@ module.exports = {
     ]
   },
 
+  // the loaders are called right to left (bottom to top - same as composition)
   module: {
-    postLoaders: [{
+    preLoaders: [{
+      exclude: /node_modules/,
       loaders: [
         'transform/cacheable?brfs',
+        'babel',
         'envify-loader'
       ]
     }],
+    postLoaders: [],
     loaders: [
       // Pass *.jsx files through jsx-loader transform
       {
+        exclude: /node_modules/,
         test: /\.jsx$/,
         loaders: [
-          'react-hot',
-          'jsx'
+          'react-hot'
         ]
       }
     ]
   },
-  devtool: "#inline-source-map",
+  devtool: '#inline-source-map',
   externals: {}
 };

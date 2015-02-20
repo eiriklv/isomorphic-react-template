@@ -1,20 +1,20 @@
 'use strict';
 
-var React = require('react');
-var ReactAsync = require('react-async');
-var Router = require('react-router');
-var DocumentTitle = require('react-document-title');
+const React = require('react');
+const ReactAsync = require('react-async');
+const Router = require('react-router');
+const DocumentTitle = require('react-document-title');
 
-var RouteHandler = Router.RouteHandler;
-var Link = Router.Link;
+const RouteHandler = Router.RouteHandler;
+const Link = Router.Link;
 
-var data = require('../public/data/places');
-var title = 'Some places in Italy';
+const data = require('../public/data/places');
+const title = 'Some places in Italy';
 
-var inline = require('fs').readFileSync(__dirname + '/../package.json', 'utf8');
+const inline = require('fs').readFileSync(__dirname + '/../package.json', 'utf8');
 console.log(inline);
 
-var App = React.createClass({
+const App = React.createClass({
   mixins: [ReactAsync.Mixin],
 
   getDefaultProps: function() {
@@ -37,7 +37,7 @@ var App = React.createClass({
   },
 
   render: function() {
-    var links = this.props.places.map(function(place) {
+    let links = this.props.places.map(function(place) {
       return (
         <li key={'place-' + place.id}>
           <Link to='place' params={{ id: place.id }}>

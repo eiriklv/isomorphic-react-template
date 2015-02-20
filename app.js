@@ -5,16 +5,16 @@ require('node-jsx').install({
   extension: '.jsx'
 });
 
-var debug = require('debug')('app');
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var cachebuster = require('./cachebuster');
-var serverRender = require('./server.jsx');
+const debug = require('debug')('app');
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const cachebuster = require('./cachebuster');
+const serverRender = require('./server.jsx');
 
-var app = express();
+const app = express();
 
 app.use(logger(app.get('env') === 'production' ? 'combined' : 'dev'));
 app.use(bodyParser.json());
@@ -24,7 +24,7 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 
 // static files with cache buster
-var publicPath = path.join(__dirname, 'public');
+const publicPath = path.join(__dirname, 'public');
 
 app.use(express.static(publicPath));
 

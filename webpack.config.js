@@ -1,6 +1,6 @@
 // Webpack configuration to use with the build task.
 
-var webpack = require('webpack');
+const webpack = require('webpack');
 
 module.exports = {
 
@@ -45,19 +45,18 @@ module.exports = {
     ]
   },
 
+  // the loaders are called right to left (bottom to top - same as composition)
   module: {
-    postLoaders: [{
+    preLoaders: [{
+      exclude: /node_modules/,
       loaders: [
         'transform/cacheable?brfs',
+        'babel',
         'envify-loader'
       ]
     }],
-    loaders: [{
-      test: /\.jsx$/,
-      loaders: [
-        'jsx'
-      ]
-    }]
+    postLoaders: [],
+    loaders: []
   },
 
   externals: {}

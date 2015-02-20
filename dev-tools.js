@@ -1,17 +1,17 @@
 'use strict';
 
-var debug = require('debug')('app');
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var webpackConfig = require('./webpack.config.dev');
-var livereload = require('livereload');
-var fs = require('fs');
-var chokidar = require('chokidar');
-var async = require('async');
-var sass = require('node-sass');
+const debug = require('debug')('app');
+const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
+const webpackConfig = require('./webpack.config.dev');
+const livereload = require('livereload');
+const fs = require('fs');
+const chokidar = require('chokidar');
+const async = require('async');
+const sass = require('node-sass');
 
 // Run the webpack dev server
-var webpackServer = new WebpackDevServer(webpack(webpackConfig), {
+const webpackServer = new WebpackDevServer(webpack(webpackConfig), {
   publicPath: webpackConfig.output.publicPath,
   contentBase: 'http://localhost:3000',
   noInfo: true,
@@ -25,7 +25,7 @@ var webpackServer = new WebpackDevServer(webpack(webpackConfig), {
 });
 
 // Render scss files
-var renderSass = function(filename) {
+const renderSass = function(filename) {
   sass.render({
     file: __dirname + '/style/main.scss',
     outFile: __dirname + '/public/css/main.css',
@@ -50,13 +50,13 @@ var renderSass = function(filename) {
 chokidar.watch(__dirname + '/style', {
   ignored: /[\/\\]\./
 }).on('all', function(event, filename) {
-  var ext = filename.split('/').pop().split('.').pop();
+  let ext = filename.split('/').pop().split('.').pop();
   if (ext !== 'scss') return;
   renderSass(filename);
 });
 
 // Watch public dir with livereload
-var lr = livereload.createServer();
+const lr = livereload.createServer();
 lr.watch(__dirname + '/public');
 
 // Render for the first run

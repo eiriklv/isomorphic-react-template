@@ -1,18 +1,18 @@
 'use strict';
 
-var React = require('react');
-var Router = require('react-router');
-var Route = Router.Route;
-var DefaultRoute = Router.DefaultRoute;
-var NotFoundRoute = Router.NotFoundRoute;
+const React = require('react');
+const Router = require('react-router');
+const Route = Router.Route;
+const DefaultRoute = Router.DefaultRoute;
+const NotFoundRoute = Router.NotFoundRoute;
 
 /* Components */
-var App = require('./components/App.jsx');
-var Index = require('./components/Index.jsx');
-var Place = require('./components/Place.jsx');
-var NotFound = require('./components/NotFound.jsx');
+const App = require('./components/App.jsx');
+const Index = require('./components/Index.jsx');
+const Place = require('./components/Place.jsx');
+const NotFound = require('./components/NotFound.jsx');
 
-var routes = (
+const routes = (
   <Route name='places' path='/' handler={App}>
     <DefaultRoute name='index' handler={Index} />
     <Route name='place' path='place/:id' handler={Place} />

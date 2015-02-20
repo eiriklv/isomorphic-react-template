@@ -1,28 +1,28 @@
 'use strict';
 
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var filter = require('gulp-filter');
-var replace = require('gulp-replace');
-var autoprefixer = require('gulp-autoprefixer');
-var jshint = require('gulp-jshint');
-var react = require('gulp-react');
-var cachebust = new require('gulp-cachebust')();
-var fs = require('fs-extra');
-var minifyCSS = require('gulp-minify-css');
-var sass = require('gulp-ruby-sass');
-var webpack = require('webpack');
-var webpackConfig = require('./webpack.config');
-var notifier = require('node-notifier');
+const gulp = require('gulp');
+const gutil = require('gulp-util');
+const filter = require('gulp-filter');
+const replace = require('gulp-replace');
+const autoprefixer = require('gulp-autoprefixer');
+const jshint = require('gulp-jshint');
+const react = require('gulp-react');
+const cachebust = new require('gulp-cachebust')();
+const fs = require('fs-extra');
+const minifyCSS = require('gulp-minify-css');
+const sass = require('gulp-ruby-sass');
+const webpack = require('webpack');
+const webpackConfig = require('./webpack.config');
+const notifier = require('node-notifier');
 
-var paths = {
+const paths = {
   build: 'build/',
   public: 'public/',
   sass: 'style/main.scss',
   server: ['package.json', 'app.js', '*.jsx', 'cachebuster.js', 'components/**/*.jsx']
 };
 
-var pkg = require('./package.json');
+const pkg = require('./package.json');
 
 function notifyError(err) {
   if (!err) {
@@ -51,7 +51,7 @@ gulp.task('build', ['clean', 'sass', 'webpack', 'copy', 'bust'], function() {
 });
 
 gulp.task('sass', function() {
-  var filterCSS = filter('**/*.css');
+  let filterCSS = filter('**/*.css');
 
   return gulp.src(paths.sass)
     .pipe(sass())
@@ -101,8 +101,8 @@ gulp.task('copy:server', ['clean'], function() {
 
 // copy public
 gulp.task('copy:public', ['clean', 'sass'], function() {
-  var src = [paths.public + '**/*', '!**/*.map'];
-  var filterCSS = filter('**/*.css');
+  let src = [paths.public + '**/*', '!**/*.map'];
+  let filterCSS = filter('**/*.css');
 
   return gulp.src(src, {
     base: '.'
@@ -117,11 +117,11 @@ gulp.task('copy:public', ['clean', 'sass'], function() {
 
 
 // cache busters
-var bustSrc = gulp.task('bust', ['bust:collect', 'bust:replace']);
+const bustSrc = gulp.task('bust', ['bust:collect', 'bust:replace']);
 
 // collect resources for cache busting
 gulp.task('bust:collect', ['sass', 'webpack', 'copy'], function() {
-  var src = [].concat(paths.public + '**/*');
+  let src = [].concat(paths.public + '**/*');
 
   return gulp.src(src, {
       cwd: paths.build,

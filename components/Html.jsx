@@ -1,9 +1,9 @@
 'use strict';
 
-var React = require('react');
+const React = require('react');
 
 // Handle the HTML rendering on the server
-var Html = React.createClass({
+const Html = React.createClass({
 render: function() {
   return (
     <html>

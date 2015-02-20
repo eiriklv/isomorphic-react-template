@@ -1,17 +1,17 @@
 'use strict';
 
-var React = require('react');
-var Router = require('react-router');
-var DocumentTitle = require('react-document-title');
+const React = require('react');
+const Router = require('react-router');
+const DocumentTitle = require('react-document-title');
 
-var places = require('../public/data/places');
-var NotFound = require('./NotFound.jsx');
+const places = require('../public/data/places');
+const NotFound = require('./NotFound.jsx');
 
-var Place = React.createClass({
+const Place = React.createClass({
   mixins: [Router.State],
 
   render: function() {
-    var place = places.filter(function(place) {
+    let place = places.filter(function(place) {
       return place.id === this.getParams().id;
     }.bind(this))[0];
 

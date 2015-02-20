@@ -1,8 +1,8 @@
 'use strict';
 
-var React = require('react');
+const React = require('react');
 
-var Index = React.createClass({
+const Index = React.createClass({
   render: function() {
     return <p>Please select a place from the left.</p>;
   }

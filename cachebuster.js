@@ -1,11 +1,11 @@
 'use strict';
 
-var cachebuster = {};
+let cachebuster = {};
 
 // Remove the hash from cache-busted resources
 // Must be called before express.static()
 cachebuster.remove = function (req, res, next) {
-  var hash = req.params[1];
+  let hash = req.params[1];
   req._hashedUrl = req.url;
   req.url = req.url.replace(hash, '');
   next();
