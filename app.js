@@ -48,8 +48,8 @@ if (app.get('env') === 'development') {
 // use react routes (this can be used for several routes depending on what state should be fetched)
 app.use('/', function(req, res, next) {
   serverRender(req, res, next, {
-    user: user,
-    places: places
+    User: user,
+    Places: places
   });
 });
 

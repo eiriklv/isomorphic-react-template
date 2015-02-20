@@ -1,7 +1,6 @@
 'use strict';
 
 const React = require('react');
-const ReactAsync = require('react-async');
 const Router = require('react-router');
 const DocumentTitle = require('react-document-title');
 
