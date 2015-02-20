@@ -45,7 +45,12 @@ if (app.get('env') === 'development') {
   });
 }
 
-// use react routes (this can be used for several routes depending on what state should be fetched)
+// right now there is only a single route
+// - we need to know what the stores should
+// be filled with
+// - do we need to duplicate the routing
+// from react router..? (doesn't seem like a good approach)
+// - need an isomorphic router that plays well with express
 app.use('/', function(req, res, next) {
   serverRender(req, res, next, {
     User: user,
