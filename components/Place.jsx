@@ -10,7 +10,7 @@ const Place = React.createClass({
 
   propTypes: {
     Data: React.PropTypes.shape({
-      places: React.PropTypes.array
+      Places: React.PropTypes.array
     }),
     Actions: React.PropTypes.shape({
       RemovePlace: React.PropTypes.function
@@ -22,9 +22,9 @@ const Place = React.createClass({
   },
 
   render: function() {
-    let places = this.props.Data.places;
+    let Data = this.props.Data;
 
-    let place = places.filter(function(place) {
+    let place = Data.Places.filter(function(place) {
       return place.id === this.getParams().id;
     }.bind(this))[0];
 

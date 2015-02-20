@@ -7,7 +7,7 @@ const Link = Router.Link;
 const App = React.createClass({
   propTypes: {
     Data: React.PropTypes.shape({
-      places: React.PropTypes.array,
+      Places: React.PropTypes.array,
       title: React.PropTypes.string
     }),
     Actions: React.PropTypes.shape({
@@ -24,9 +24,9 @@ const App = React.createClass({
   },
 
   render: function() {
-    var data = this.props.Data;
+    var Data = this.props.Data;
 
-    let links = data.places.map(function(place) {
+    let links = Data.Places.map(function(place) {
       return (
         <li key={'place-' + place.id}>
           <Link to='place' params={{ id: place.id }}>
@@ -38,8 +38,8 @@ const App = React.createClass({
 
     return (
       <div className='navigation'>
-        <h1>{data.title}</h1>
-        <h3 onClick={this.addNewPlace}>Hello {data.user.fullname}!</h3>
+        <h1>{Data.title}</h1>
+        <h3 onClick={this.addNewPlace}>Hello {Data.User.fullname}!</h3>
         <ul className='master'>
           {links}
           <Link to='index'>

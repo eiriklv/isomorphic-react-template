@@ -12,7 +12,7 @@ function UserStore(initialData) {
 
   this.eventListeners = [];
 
-  this.getUserData = function() {
+  this.getData = function() {
     return assign({}, this.data);
   };
 };

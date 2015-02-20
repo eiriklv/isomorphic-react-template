@@ -20,17 +20,8 @@ const TopComponent = React.createClass({
 
   getInitialState: function() {
     return {
-      places: this.props.Stores.Places.getPlaces(),
-      user: this.props.Stores.User.getUserData(),
-      title: 'Some places in Italy'
+      title: 'Some Places in Italy'
     }
-  },
-
-  updateState: function() {
-    this.setState({
-      places: this.props.Stores.Places.getPlaces(),
-      user: this.props.Stores.User.getUserData()
-    });
   },
 
   render: function() {
