@@ -4,7 +4,7 @@ const React = require('react');
 const App = require('./App.jsx');
 const StoreUpdateMixin = require('../mixins/store-update');
 
-const StateComponent = React.createClass({
+const TopComponent = React.createClass({
   mixins: [StoreUpdateMixin],
 
   propTypes: {
@@ -43,4 +43,4 @@ const StateComponent = React.createClass({
   }
 });
 
-module.exports = StateComponent;
+module.exports = TopComponent;
