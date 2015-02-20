@@ -11,7 +11,7 @@ const Html = require('./components/Html.jsx');
 module.exports = function(req, res, next, context) {
   Router.run(routes, req.url, function(Handler, state) {
 
-    context = context || {}
+    context = context || {};
     let title = DocumentTitle.rewind();
     let renderedApp = React.createElement(Handler, context);
 
