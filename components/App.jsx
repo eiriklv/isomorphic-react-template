@@ -7,9 +7,17 @@ const RouteHandler = Router.RouteHandler;
 const Navigation = require('./Navigation.jsx');
 
 const App = React.createClass({
+  mixins: [Router.State],
+
   propTypes: {
     Actions: React.PropTypes.object.isRequired,
     Data: React.PropTypes.object.isRequired
+  },
+
+  componentWillUpdate: function() {
+    // here we could tell the stores to refresh based on the route
+    // - call an action to fill the store(s) with new data
+    console.log(this.getParams());
   },
 
   render: function() {
