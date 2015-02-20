@@ -3,8 +3,6 @@
 const React = require('react');
 const Router = require('react-router');
 const DocumentTitle = require('react-document-title');
-
-const places = require('../public/data/places');
 const NotFound = require('./NotFound.jsx');
 
 const Place = React.createClass({
@@ -15,11 +13,13 @@ const Place = React.createClass({
   },
 
   render: function() {
-    let place = places.filter(function(place) {
+    let place = this.props.places.filter(function(place) {
       return place.id === this.getParams().id;
     }.bind(this))[0];
 
-    if (!place) return <NotFound />;
+    if (!place) {
+      return <NotFound />;
+    }
 
     return (
       <DocumentTitle title={place.name}>

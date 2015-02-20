@@ -15,7 +15,21 @@ const App = React.createClass({
     Stores: React.PropTypes.shape({
       Places: React.PropTypes.object,
       User: React.PropTypes.object
+    }),
+    Actions: React.PropTypes.shape({
+      AddPlace: React.PropTypes.function,
+      RemovePlace: React.PropTypes.function
     })
+  },
+
+  componentWillMount: function() {
+    this.props.Stores.Places.on('update', this.updatePlacesState);
+    this.props.Stores.User.on('update', this.updateUserState);
+  },
+
+  componentWillUnmount: function() {
+    this.props.Stores.Places.removeListener('update', this.updatePlacesState);
+    this.props.Stores.User.removeListener('update', this.updateUserState);
   },
 
   getInitialState: function() {
@@ -23,6 +37,25 @@ const App = React.createClass({
       places: this.props.Stores.Places.getPlaces(),
       user: this.props.Stores.User.getUserData()
     }
+  },
+
+  updatePlacesState: function() {
+    this.setState({
+      places: this.props.Stores.Places.getPlaces()
+    });
+  },
+
+  updateUserState: function() {
+    this.setState({
+      user: this.props.User.Places.getUserData()
+    });
+  },
+
+  addNewPlace: function() {
+    this.props.Actions.AddPlace({
+      'id': 'sunndal',
+      'name': 'Sunndalsora (Norge)'
+    });
   },
 
   render: function() {
@@ -40,7 +73,7 @@ const App = React.createClass({
       <DocumentTitle title={title}>
         <div className='app'>
           <h1>{title}</h1>
-          <h3>Hello {this.state.user.fullname}!</h3>
+          <h3 onClick={this.addNewPlace}>Hello {this.state.user.fullname}!</h3>
           <ul className='master'>
             {links}
             <Link to='index'>
