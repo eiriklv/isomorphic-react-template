@@ -46,16 +46,16 @@ module.exports = {
   },
 
   module: {
+    postLoaders: [{
+      loaders: [
+        'transform/cacheable?brfs',
+        'envify-loader'
+      ]
+    }],
     loaders: [{
       test: /\.jsx$/,
       loaders: [
-        'jsx',
-        'envify-loader'
-      ]
-    }, {
-      test: /\.js$/,
-      loaders: [
-        'envify-loader'
+        'jsx'
       ]
     }]
   },

@@ -22,7 +22,10 @@ module.exports = {
 
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.optimize.CommonsChunkPlugin('lib', 'lib.js')
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'lib',
+      filename: 'lib.js'
+    })
   ],
 
   resolve: {
@@ -35,14 +38,19 @@ module.exports = {
   },
 
   module: {
+    postLoaders: [{
+      loaders: [
+        'transform/cacheable?brfs',
+        'envify-loader'
+      ]
+    }],
     loaders: [
       // Pass *.jsx files through jsx-loader transform
       {
         test: /\.jsx$/,
         loaders: [
           'react-hot',
-          'jsx',
-          'envify-loader'
+          'jsx'
         ]
       }
     ]

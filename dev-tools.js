@@ -32,12 +32,12 @@ var renderSass = function(filename) {
     sourceMap: true,
     success: function(data) {
       if (filename) debug('Changed ' + filename);
+      
       async.series([
         fs.writeFile.bind(fs, __dirname + '/public/css/main.css.map', data.map, 'utf-8'),
         fs.writeFile.bind(fs, __dirname + '/public/css/main.css', data.css, 'utf-8')
       ], function(err) {
         if (err) debug('error writing css/sourcemap to file:', err);
-        debug('wrote css/sourcemap to file');
       });
     },
     error: function(error) {
@@ -55,9 +55,9 @@ chokidar.watch(__dirname + '/style', {
   renderSass(filename);
 });
 
-// Render for the first run
-renderSass();
-
 // Watch public dir with livereload
 var lr = livereload.createServer();
 lr.watch(__dirname + '/public');
+
+// Render for the first run
+renderSass();

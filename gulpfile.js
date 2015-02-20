@@ -12,8 +12,7 @@ var fs = require('fs-extra');
 var minifyCSS = require('gulp-minify-css');
 var sass = require('gulp-ruby-sass');
 var webpack = require('webpack');
-var webpackBuild = require('./webpack.config');
-var webpackDev = require('./webpack.config.dev');
+var webpackConfig = require('./webpack.config');
 var notifier = require('node-notifier');
 
 var paths = {
@@ -47,11 +46,13 @@ gulp.task('build', ['clean', 'sass', 'webpack', 'copy', 'bust'], function() {
     message: 'Build: done.',
     open: 'file://' + __dirname + '/' + paths.build
   });
+
   gutil.log('[build] Run `./scripts/prod` to test the built app.');
 });
 
 gulp.task('sass', function() {
   var filterCSS = filter('**/*.css');
+
   return gulp.src(paths.sass)
     .pipe(sass())
     .on('error', notifyError)
@@ -69,8 +70,9 @@ gulp.task('clean', function(callback) {
 
 // create chunks and uglify with webpack
 gulp.task('webpack', ['clean'], function(callback) {
-  webpack(webpackBuild, function(err, stats) {
+  webpack(webpackConfig, function(err, stats) {
     if (err) return notifyError(err);
+
     gutil.log('[webpack]', stats.toString({
       colors: true,
       hash: false,
@@ -81,6 +83,7 @@ gulp.task('webpack', ['clean'], function(callback) {
       modules: false,
       children: true
     }));
+
     callback();
   });
 });
@@ -104,13 +107,11 @@ gulp.task('copy:public', ['clean', 'sass'], function() {
   return gulp.src(src, {
     base: '.'
   })
-
   .pipe(filterCSS)
-    .pipe(minifyCSS({
-      keepBreaks: true
-    }))
-    .pipe(filterCSS.restore())
-
+  .pipe(minifyCSS({
+    keepBreaks: true
+  }))
+  .pipe(filterCSS.restore())
   .pipe(gulp.dest(paths.build));
 });
 
@@ -121,6 +122,7 @@ var bustSrc = gulp.task('bust', ['bust:collect', 'bust:replace']);
 // collect resources for cache busting
 gulp.task('bust:collect', ['sass', 'webpack', 'copy'], function() {
   var src = [].concat(paths.public + '**/*');
+
   return gulp.src(src, {
       cwd: paths.build,
       base: paths.build + paths.public
@@ -131,6 +133,7 @@ gulp.task('bust:collect', ['sass', 'webpack', 'copy'], function() {
 // replace collected resources
 gulp.task('bust:replace', ['bust:collect'], function() {
   gutil.log('[bust:replace]', 'Busting ' + Object.keys(cachebust.mappings).length + ' asset(s)...');
+
   return gulp.src(paths.server, {
       cwd: paths.build,
       base: paths.build

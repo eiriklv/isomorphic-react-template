@@ -11,6 +11,9 @@ var Link = Router.Link;
 var data = require('../public/data/places');
 var title = 'Some places in Italy';
 
+var inline = require('fs').readFileSync(__dirname + '/../package.json', 'utf8');
+console.log(inline);
+
 var App = React.createClass({
   mixins: [ReactAsync.Mixin],
 
