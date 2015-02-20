@@ -8,36 +8,28 @@ const DocumentTitle = require('react-document-title');
 const RouteHandler = Router.RouteHandler;
 const Link = Router.Link;
 
-const data = require('../public/data/places');
 const title = 'Some places in Italy';
 
-const inline = require('fs').readFileSync(__dirname + '/../package.json', 'utf8');
-console.log(inline);
+// example of using inlining with transform-loader + brfs
+//const inline = require('fs').readFileSync(__dirname + '/../package.json', 'utf8');
 
 const App = React.createClass({
-  mixins: [ReactAsync.Mixin],
+  propTypes: {
+    Stores: React.PropTypes.shape({
+      Places: React.PropTypes.object,
+      User: React.PropTypes.object
+    })
+  },
 
-  getDefaultProps: function() {
+  getInitialState: function() {
     return {
-      places: data
+      places: this.props.Stores.Places.getPlaces(),
+      user: this.props.Stores.User.getUserData()
     }
   },
 
-  getInitialStateAsync: function(callback) {
-    setTimeout(
-      callback.bind(
-        null,
-        null,
-        {
-          text: 'hello world'
-        }
-      ),
-      500
-    );
-  },
-
   render: function() {
-    let links = this.props.places.map(function(place) {
+    let links = this.state.places.map(function(place) {
       return (
         <li key={'place-' + place.id}>
           <Link to='place' params={{ id: place.id }}>
@@ -51,7 +43,7 @@ const App = React.createClass({
       <DocumentTitle title={title}>
         <div className='app'>
           <h1>{title}</h1>
-          <h3>{this.state.text}</h3>
+          <h3>Hello {this.state.user.fullname}!</h3>
           <ul className='master'>
             {links}
             <Link to='index'>

@@ -1,31 +1,37 @@
 'use strict';
 
 const React = require('react');
-const ReactAsync = require('react-async');
 const Router = require('react-router');
 const DocumentTitle = require('react-document-title');
 
 const routes = require('./routes.jsx');
 const Html = require('./components/Html.jsx');
 
-module.exports = function(req, res, next, context) {
+var PlacesStore = require('./stores/places-store.js');
+var UserStore = require('./stores/user-store.js');
+
+module.exports = function(req, res, next, initialContext) {
   Router.run(routes, req.url, function(Handler, state) {
 
-    context = context || {};
-    let title = DocumentTitle.rewind();
-    let renderedApp = React.createElement(Handler, context);
+    initialContext = initialContext || {};
+    
+    var title = DocumentTitle.rewind();
 
-    ReactAsync.renderToStringAsync(renderedApp, function(err, markup, data) {
-      if (!markup) return next(err);
-      
-      let html = React.renderToStaticMarkup(
-        <Html
-          title={title}
-          markup={ReactAsync.injectIntoMarkup(markup, data)}
-        />
-      );
+    let renderedApp = <Handler
+      Stores={{
+        Places: PlacesStore(initialContext.places),
+        User: UserStore(initialContext.user)
+      }}
+    />;
 
-      res.send('<!DOCTYPE html>' + html);
-    });
+    var markup = React.renderToString(renderedApp);
+    
+    var html = React.renderToStaticMarkup(<Html
+      title={title}
+      markup={markup}
+      __initialContext={initialContext}
+    />);
+
+    res.send('<!DOCTYPE html>' + html);
   });
 };

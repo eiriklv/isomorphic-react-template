@@ -14,6 +14,10 @@ const bodyParser = require('body-parser');
 const cachebuster = require('./cachebuster');
 const serverRender = require('./server.jsx');
 
+// dummy data
+const places = require('./public/data/places');
+const user = require('./public/data/user');
+
 const app = express();
 
 app.use(logger(app.get('env') === 'production' ? 'combined' : 'dev'));
@@ -44,9 +48,8 @@ if (app.get('env') === 'development') {
 // use react routes (this can be used for several routes depending on what state should be fetched)
 app.use('/', function(req, res, next) {
   serverRender(req, res, next, {
-    text: 'hello world',
-    username: 'eiriklv',
-    token: 'fjrGSGg$G$h65h6h6$3g465j6H$#%h6'
+    user: user,
+    places: places
   });
 });
 
