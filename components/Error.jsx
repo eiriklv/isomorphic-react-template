@@ -11,8 +11,10 @@ const ErrorComponent = React.createClass({
     console.error(this.props.error);
     
     return (
-      <h3>Something bad happened...</h3>
-      <p>{error.message}</p>
+      <div>
+        <h3>Something bad happened...</h3>
+        <p>{error.message}</p>
+      </div>
     );
   }
 });
