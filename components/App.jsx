@@ -10,28 +10,47 @@ const App = React.createClass({
   mixins: [Router.State],
 
   propTypes: {
-    Actions: React.PropTypes.object.isRequired,
-    State: React.PropTypes.object.isRequired
-  },
-
-  componentWillUpdate: function() {
-    // here we could tell the stores to refresh based on the route
-    // - call an action to fill the store(s) with new data
-    console.log(this.getParams());
+    State: React.PropTypes.shape({
+      App: React.PropTypes.shape({
+        data: React.React.PropTypes.object,
+        error: React.React.PropTypes.object,
+        isLoading: React.React.PropTypes.boolean
+      }),
+      Alerts: React.PropTypes.shape({
+        data: React.React.PropTypes.object,
+        error: React.React.PropTypes.object,
+        isLoading: React.React.PropTypes.boolean
+      }),
+      Todos: React.PropTypes.shape({
+        data: React.React.PropTypes.object,
+        error: React.React.PropTypes.object,
+        isLoading: React.React.PropTypes.boolean
+      }),
+    }),
+    Actions: React.PropTypes.shape({
+      AddTodo: React.PropTypes.function,
+      RemoveTodo: React.PropTypes.function,
+      CompleteTodo: React.PropTypes.function,
+      DismissAlert: React.PropTypes.function,
+      DismissAllAlerts: React.PropTypes.function
+    })
   },
 
   render: function() {
+    let State = this.props.State;
+    let Actions = this.props.Actions;
+
     return (
-      <DocumentTitle title={this.props.State.title}>
+      <DocumentTitle title={State.App.data.title}>
         <div className='app'>
           <Navigation
-            State={this.props.State}
-            Actions={this.props.Actions}
+            State={State}
+            Actions={Actions}
           />
           <div className='detail'>
             <RouteHandler 
-              State={this.props.State}
-              Actions={this.props.Actions}
+              State={State}
+              Actions={Actions}
             />
           </div>
         </div>
