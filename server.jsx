@@ -25,8 +25,8 @@ module.exports = function(req, res, next) {
 
     let markup = React.renderToString(renderedApp);
     
-    let title = DocumentTitle.rewind();  
-    
+    let title = DocumentTitle.rewind();
+
     let html = React.renderToStaticMarkup(<Html
       title={title}
       markup={markup}

@@ -1,6 +1,6 @@
 'use strict';
 
-const debug = require('debug')('app');
+const debug = require('debug')('app:dev-server');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const webpackConfig = require('./webpack.config.dev');
