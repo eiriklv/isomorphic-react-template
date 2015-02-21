@@ -5,6 +5,7 @@ const Router = require('react-router');
 const DocumentTitle = require('react-document-title');
 const NotFound = require('./NotFound.jsx');
 const Loading = require('./Loading.jsx');
+const ErrorComponent = require('./Error.jsx');
 
 const Place = React.createClass({
   mixins: [Router.State],
@@ -13,7 +14,7 @@ const Place = React.createClass({
     State: React.PropTypes.shape({
       Places: React.PropTypes.shape({
         isLoading: React.PropTypes.boolean,
-        hasError: React.PropTypes.object,
+        error: React.PropTypes.object,
         data: React.PropTypes.array
       })
     }),
@@ -35,6 +36,7 @@ const Place = React.createClass({
   render: function() {
     let State = this.props.State;
 
+    if (State.Places.error) return <ErrorComponent error={error} />;
     if (State.Places.isLoading) return <Loading />;
 
     let place = this.getPlace(

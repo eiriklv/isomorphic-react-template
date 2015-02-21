@@ -9,12 +9,12 @@ const Navigation = React.createClass({
     State: React.PropTypes.shape({
       Places: React.PropTypes.shape({
         isLoading: React.PropTypes.boolean,
-        hasError: React.PropTypes.object,
+        error: React.PropTypes.object,
         data: React.PropTypes.array
       }),
       User: React.PropTypes.shape({
         isLoading: React.PropTypes.boolean,
-        hasError: React.PropTypes.object,
+        error: React.PropTypes.object,
         data: React.PropTypes.object
       }),
       title: React.PropTypes.string
@@ -45,8 +45,9 @@ const Navigation = React.createClass({
   },
 
   render: function() {
-    var State = this.props.State;
+    let State = this.props.State;
     let links = this.mapLinks(State.Places.data);
+    let isLoading = State.Places.isLoading;
 
     return (
       <div className='navigation'>
@@ -54,6 +55,7 @@ const Navigation = React.createClass({
         <h3 onClick={this.addNewPlace}>Hello {State.User.data.fullname}!</h3>
         <ul className='master'>
           {links}
+          {isLoading ? <p>Loading..</p> : null}
           <Link to='index'>
             <small>(back to index)</small>
           </Link>
