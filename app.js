@@ -14,10 +14,6 @@ const bodyParser = require('body-parser');
 const cachebuster = require('./cachebuster');
 const serverRender = require('./server.jsx');
 
-// dummy data
-const places = require('./public/data/places');
-const user = require('./public/data/user');
-
 const app = express();
 
 app.use(logger(app.get('env') === 'production' ? 'combined' : 'dev'));
@@ -45,18 +41,8 @@ if (app.get('env') === 'development') {
   });
 }
 
-// right now there is only a single route
-// - we need to know what the stores should
-// be filled with
-// - do we need to duplicate the routing
-// from react router..? (doesn't seem like a good approach)
-// - need an isomorphic router that plays well with express
-app.use('/', function(req, res, next) {
-  serverRender(req, res, next, {
-    User: user,
-    Places: places
-  });
-});
+// single route handler
+app.use('/', serverRender);
 
 // error pages
 app.use(function(err, req, res, next) {

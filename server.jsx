@@ -10,21 +10,22 @@ const Html = require('./components/Html.jsx');
 const Stores = require('./stores');
 const Actions = require('./actions');
 
-module.exports = function(req, res, next, initialContext) {
-  initialContext = initialContext || {};
-  
-  let title = DocumentTitle.rewind();
+const getContext = require('./context');
 
-  let StoreInstances = Stores(initialContext);
-  let ActionInstances = Actions(StoreInstances);
-
+module.exports = function(req, res, next) {
   Router.run(routes, req.url, function(Handler, state) {
+    let initialContext = getContext(req, state);
+    let StoreInstances = Stores(initialContext);
+    let ActionInstances = Actions(StoreInstances);
+
     let renderedApp = <Handler
       Stores={StoreInstances}
       Actions={ActionInstances}
     />;
 
     let markup = React.renderToString(renderedApp);
+    
+    let title = DocumentTitle.rewind();  
     
     let html = React.renderToStaticMarkup(<Html
       title={title}
