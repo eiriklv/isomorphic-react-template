@@ -4,10 +4,19 @@ const React = require('react');
 const Router = require('react-router');
 const Link = Router.Link;
 
-const App = React.createClass({
+const Navigation = React.createClass({
   propTypes: {
-    Data: React.PropTypes.shape({
-      Places: React.PropTypes.array,
+    State: React.PropTypes.shape({
+      Places: React.PropTypes.shape({
+        isLoading: React.PropTypes.boolean,
+        hasError: React.PropTypes.object,
+        data: React.PropTypes.array
+      }),
+      User: React.PropTypes.shape({
+        isLoading: React.PropTypes.boolean,
+        hasError: React.PropTypes.object,
+        data: React.PropTypes.object
+      }),
       title: React.PropTypes.string
     }),
     Actions: React.PropTypes.shape({
@@ -23,10 +32,8 @@ const App = React.createClass({
     });
   },
 
-  render: function() {
-    var Data = this.props.Data;
-
-    let links = Data.Places.map(function(place) {
+  mapLinks: function(places) {
+    return places.map(function(place) {
       return (
         <li key={'place-' + place.id}>
           <Link to='place' params={{ id: place.id }}>
@@ -35,11 +42,16 @@ const App = React.createClass({
         </li>
       );
     }.bind(this));
+  },
+
+  render: function() {
+    var State = this.props.State;
+    let links = this.mapLinks(State.Places.data);
 
     return (
       <div className='navigation'>
-        <h1>{Data.title}</h1>
-        <h3 onClick={this.addNewPlace}>Hello {Data.User.fullname}!</h3>
+        <h1>{State.title}</h1>
+        <h3 onClick={this.addNewPlace}>Hello {State.User.data.fullname}!</h3>
         <ul className='master'>
           {links}
           <Link to='index'>
@@ -51,4 +63,4 @@ const App = React.createClass({
   }
 });
 
-module.exports = App;
+module.exports = Navigation;

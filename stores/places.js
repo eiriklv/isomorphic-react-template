@@ -3,6 +3,8 @@ const eventEmitter = require('events').EventEmitter;
 const util = require('util');
 
 const CHANGE_EVENT = 'change';
+const LOADING_EVENT = 'loading';
+const ERROR_EVENT = 'failed';
 
 util.inherits(PlacesStore, eventEmitter);
 
@@ -30,8 +32,12 @@ function PlacesStore(initialData) {
   };
 
   this.addPlace = function(place) {
-    this.places.push(place);
-    this.emit(CHANGE_EVENT);
+    this.emit(LOADING_EVENT);
+
+    setTimeout(function() {
+      this.places.push(place);
+      this.emit(CHANGE_EVENT);
+    }.bind(this), 2000);
   };
 
   // optional way of emitting instead of calling directly

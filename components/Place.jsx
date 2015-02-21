@@ -4,13 +4,18 @@ const React = require('react');
 const Router = require('react-router');
 const DocumentTitle = require('react-document-title');
 const NotFound = require('./NotFound.jsx');
+const Loading = require('./Loading.jsx');
 
 const Place = React.createClass({
   mixins: [Router.State],
 
   propTypes: {
-    Data: React.PropTypes.shape({
-      Places: React.PropTypes.array
+    State: React.PropTypes.shape({
+      Places: React.PropTypes.shape({
+        isLoading: React.PropTypes.boolean,
+        hasError: React.PropTypes.object,
+        data: React.PropTypes.array
+      })
     }),
     Actions: React.PropTypes.shape({
       RemovePlace: React.PropTypes.function
@@ -21,16 +26,23 @@ const Place = React.createClass({
     this.props.Actions.RemovePlace(this.getParams().id);
   },
 
-  render: function() {
-    let Data = this.props.Data;
-
-    let place = Data.Places.filter(function(place) {
-      return place.id === this.getParams().id;
+  getPlace: function(places, id) {
+    return places.filter(function(place) {
+      return place.id === id;
     }.bind(this))[0];
+  },
 
-    if (!place) {
-      return <NotFound />;
-    }
+  render: function() {
+    let State = this.props.State;
+
+    if (State.Places.isLoading) return <Loading />;
+
+    let place = this.getPlace(
+      State.Places.data,
+      this.getParams().id
+    );
+
+    if (!place) return <NotFound />;
 
     return (
       <DocumentTitle title={place.name}>

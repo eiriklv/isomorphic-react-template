@@ -11,7 +11,7 @@ const App = React.createClass({
 
   propTypes: {
     Actions: React.PropTypes.object.isRequired,
-    Data: React.PropTypes.object.isRequired
+    State: React.PropTypes.object.isRequired
   },
 
   componentWillUpdate: function() {
@@ -22,15 +22,15 @@ const App = React.createClass({
 
   render: function() {
     return (
-      <DocumentTitle title={this.props.Data.title}>
+      <DocumentTitle title={this.props.State.title}>
         <div className='app'>
           <Navigation
-            Data={this.props.Data}
+            State={this.props.State}
             Actions={this.props.Actions}
           />
           <div className='detail'>
             <RouteHandler 
-              Data={this.props.Data}
+              State={this.props.State}
               Actions={this.props.Actions}
             />
           </div>

@@ -27,7 +27,7 @@ const TopComponent = React.createClass({
   render: function() {
     return (
       <App 
-        Data={this.state}
+        State={this.state}
         Actions={this.props.Actions}
       />
     );
