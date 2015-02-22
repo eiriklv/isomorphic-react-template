@@ -10,13 +10,13 @@ const Actions = require('./actions');
 
 document.addEventListener('DOMContentLoaded', function(event) {
   let initialContext = window.__initialContext || {};
-
   let StoreInstances = Stores(initialContext);
   let ActionInstances = Actions(StoreInstances);
 
-  Router.run(routes, Router.HistoryLocation, function(Handler, state) {
+  Router.run(routes, Router.HistoryLocation, function(Handler, routerState) {
     React.render(
       <Handler
+        Route={routerState}
         Stores={StoreInstances}
         Actions={ActionInstances}
       />,

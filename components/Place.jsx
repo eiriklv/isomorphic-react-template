@@ -8,7 +8,12 @@ const Loading = require('./Loading.jsx');
 const ErrorComponent = require('./Error.jsx');
 
 const Place = React.createClass({
-  mixins: [Router.State],
+  contextTypes: {
+    Route: React.PropTypes.object,
+    Actions: React.PropTypes.shape({
+      RemovePlace: React.PropTypes.function
+    })
+  },
 
   propTypes: {
     State: React.PropTypes.shape({
@@ -17,14 +22,11 @@ const Place = React.createClass({
         error: React.PropTypes.object,
         data: React.PropTypes.array
       })
-    }),
-    Actions: React.PropTypes.shape({
-      RemovePlace: React.PropTypes.function
     })
   },
 
   handleClick: function() {
-    this.props.Actions.RemovePlace(this.getParams().id);
+    this.context.Actions.RemovePlace(this.context.Route.params.id);
   },
 
   getPlace: function(places, id) {
@@ -41,7 +43,7 @@ const Place = React.createClass({
 
     let place = this.getPlace(
       State.Places.data,
-      this.getParams().id
+      this.context.Route.params.id
     );
 
     if (!place) return <NotFound />;

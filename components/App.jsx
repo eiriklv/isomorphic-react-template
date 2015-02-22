@@ -7,31 +7,53 @@ const RouteHandler = Router.RouteHandler;
 const Navigation = require('./Navigation.jsx');
 
 const App = React.createClass({
-  mixins: [Router.State],
-
-  propTypes: {
-    Actions: React.PropTypes.object.isRequired,
-    State: React.PropTypes.object.isRequired
+  contextTypes: {
+    Route: React.PropTypes.object,
+    Actions: React.PropTypes.shape({
+      AddPlace: React.PropTypes.function,
+      RemovePlace: React.PropTypes.function,
+      DismissAlert: React.PropTypes.function,
+      DismissAllAlerts: React.PropTypes.function
+    })
   },
 
-  componentWillUpdate: function() {
-    // here we could tell the stores to refresh based on the route
-    // - call an action to fill the store(s) with new data
-    console.log(this.getParams());
+  propTypes: {
+    State: React.PropTypes.shape({
+      App: React.PropTypes.shape({
+        data: React.PropTypes.object,
+        error: React.PropTypes.object,
+        isLoading: React.PropTypes.boolean
+      }),
+      Alerts: React.PropTypes.shape({
+        data: React.PropTypes.array,
+        error: React.PropTypes.object,
+        isLoading: React.PropTypes.boolean
+      }),
+      Places: React.PropTypes.shape({
+        data: React.PropTypes.array,
+        error: React.PropTypes.object,
+        isLoading: React.PropTypes.boolean
+      }),
+      User: React.PropTypes.shape({
+        data: React.PropTypes.object,
+        error: React.PropTypes.object,
+        isLoading: React.PropTypes.boolean
+      })
+    })
   },
 
   render: function() {
+    let State = this.props.State;
+
     return (
-      <DocumentTitle title={this.props.State.title}>
+      <DocumentTitle title={State.App.data.title}>
         <div className='app'>
           <Navigation
-            State={this.props.State}
-            Actions={this.props.Actions}
+            State={State}
           />
           <div className='detail'>
             <RouteHandler 
-              State={this.props.State}
-              Actions={this.props.Actions}
+              State={State}
             />
           </div>
         </div>

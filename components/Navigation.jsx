@@ -5,6 +5,12 @@ const Router = require('react-router');
 const Link = Router.Link;
 
 const Navigation = React.createClass({
+  contextTypes: {
+    Actions: React.PropTypes.shape({
+      AddPlace: React.PropTypes.function
+    })
+  },
+
   propTypes: {
     State: React.PropTypes.shape({
       Places: React.PropTypes.shape({
@@ -12,21 +18,16 @@ const Navigation = React.createClass({
         error: React.PropTypes.object,
         data: React.PropTypes.array
       }),
-      User: React.PropTypes.shape({
-        isLoading: React.PropTypes.boolean,
+      App: React.PropTypes.shape({
+        data: React.PropTypes.object,
         error: React.PropTypes.object,
-        data: React.PropTypes.object
-      }),
-      title: React.PropTypes.string
-    }),
-    Actions: React.PropTypes.shape({
-      AddPlace: React.PropTypes.function,
-      RemovePlace: React.PropTypes.function
+        isLoading: React.PropTypes.boolean
+      })
     })
   },
 
   addNewPlace: function() {
-    this.props.Actions.AddPlace({
+    this.context.Actions.AddPlace({
       'id': 'sunndal',
       'name': 'Sunndalsora (Norge)'
     });
@@ -51,7 +52,7 @@ const Navigation = React.createClass({
 
     return (
       <div className='navigation'>
-        <h1>{State.title}</h1>
+        <h1>{State.App.data.title}</h1>
         <h3 onClick={this.addNewPlace}>Hello {State.User.data.fullname}!</h3>
         <ul className='master'>
           {links}
