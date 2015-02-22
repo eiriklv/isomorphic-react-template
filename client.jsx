@@ -9,11 +9,17 @@ const Stores = require('./stores');
 const Actions = require('./actions');
 
 document.addEventListener('DOMContentLoaded', function(event) {
+  let router = Router.create({
+    routes: routes,
+    location: Router.HistoryLocation
+  });
+
   let initialContext = window.__initialContext || {};
   let StoreInstances = Stores(initialContext);
-  let ActionInstances = Actions(StoreInstances);
 
-  Router.run(routes, Router.HistoryLocation, function(Handler, routerState) {
+  router.run(function(Handler, routerState) {
+    let ActionInstances = Actions(StoreInstances, router);
+    
     React.render(
       <Handler
         Route={routerState}

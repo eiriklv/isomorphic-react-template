@@ -3,8 +3,9 @@
 // - will use the result to update the store store methods (add/remove/replace)
 // - can be a waterfall chain of operations that trigger an arbitrary number of operations to stores
 // - e.g (check User/Auth Store, perform data operation (http), update applicable stores via their methods)
+// - do route transitions here after async operations like login / signup
 
-module.exports = function(Stores) {
+module.exports = function(Stores, router) {
   return function(id) {
     Stores.Alerts.dismissAlert(id);
   };

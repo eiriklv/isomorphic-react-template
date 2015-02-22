@@ -1,6 +1,6 @@
-exports = module.exports = function(StoresInstances) {
+exports = module.exports = function(StoresInstances, routerState) {
   return {
-    AddPlace: require('./add-place')(StoresInstances),
-    RemovePlace: require('./remove-place')(StoresInstances)
+    AddPlace: require('./add-place')(StoresInstances, routerState),
+    RemovePlace: require('./remove-place')(StoresInstances, routerState)
   };
 };

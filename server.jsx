@@ -13,10 +13,15 @@ const Actions = require('./actions');
 const getContext = require('./context');
 
 module.exports = function(req, res, next) {
-  Router.run(routes, req.url, function(Handler, routerState) {
+  let router = Router.create({
+    routes: routes,
+    location: req.url
+  });
+
+  router.run(function(Handler, routerState) {
     let initialContext = getContext(req, routerState);
     let StoreInstances = Stores(initialContext);
-    let ActionInstances = Actions(StoreInstances);
+    let ActionInstances = Actions(StoreInstances, router);
 
     let title = DocumentTitle.rewind();
 
