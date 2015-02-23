@@ -26,6 +26,13 @@ const Navigation = React.createClass({
     })
   },
 
+  statics: {
+    willTransitionTo: function(transition, params, query, done) {
+      console.log('will transition to Navigation');
+      done();
+    }
+  },
+
   addNewPlace: function() {
     this.context.Actions.AddPlace({
       'id': 'sunndal',

@@ -8,8 +8,6 @@ const Navigation = require('./Navigation.jsx');
 const AuthMixin = require('../mixins/auth');
 
 const App = React.createClass({
-  mixins: [AuthMixin],
-
   contextTypes: {
     Router: React.PropTypes.any,
     RouterState: React.PropTypes.object,
@@ -40,6 +38,13 @@ const App = React.createClass({
         isLoading: React.PropTypes.boolean
       })
     })
+  },
+
+  statics: {
+    willTransitionTo: function(transition, params, query, done) {
+      console.log('will transition to App');
+      done();
+    }
   },
 
   render: function() {

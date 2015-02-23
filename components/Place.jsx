@@ -25,6 +25,13 @@ const Place = React.createClass({
     })
   },
 
+  statics: {
+    willTransitionTo: function(transition, params, query, done) {
+      console.log('will transition to Place');
+      done();
+    }
+  },
+
   handleClick: function() {
     this.context.Actions.RemovePlace(this.context.RouterState.params.id);
   },

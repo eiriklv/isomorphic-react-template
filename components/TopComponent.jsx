@@ -41,6 +41,13 @@ const TopComponent = React.createClass({
     };
   },
 
+  statics: {
+    willTransitionTo: function(transition, params, query, done) {
+      console.log('will transition to TopComponent');
+      done();
+    }
+  },
+
   render: function() {
     return (
       <RouteHandler

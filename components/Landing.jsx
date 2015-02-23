@@ -26,6 +26,13 @@ const Landing = React.createClass({
     })
   },
 
+  statics: {
+    willTransitionTo: function(transition, params, query, done) {
+      console.log('will transition to Landing');
+      done();
+    }
+  },
+
   render: function() {
     return (
       <DocumentTitle title={'Landing'}>
