@@ -5,17 +5,16 @@ const Router = require('react-router');
 const DocumentTitle = require('react-document-title');
 const RouteHandler = Router.RouteHandler;
 const Navigation = require('./Navigation.jsx');
+const AuthMixin = require('../mixins/auth');
 
 const App = React.createClass({
+  mixins: [AuthMixin],
+
   contextTypes: {
     Router: React.PropTypes.any,
     RouterState: React.PropTypes.object,
-    Actions: React.PropTypes.shape({
-      AddPlace: React.PropTypes.function,
-      RemovePlace: React.PropTypes.function,
-      DismissAlert: React.PropTypes.function,
-      DismissAllAlerts: React.PropTypes.function
-    })
+    Stores: React.PropTypes.object,
+    Actions: React.PropTypes.object
   },
 
   propTypes: {
@@ -41,18 +40,6 @@ const App = React.createClass({
         isLoading: React.PropTypes.boolean
       })
     })
-  },
-
-  statics: {
-    willTransitionTo: function(transition, params, query, done) {
-      if (!transition.context.Stores.User.getData().isAuthenticated) {
-        console.log('user is not authenticated!');
-        transition.redirect('/');
-      } else {
-        console.log('user is authenticated!');
-      }
-      done();
-    }
   },
 
   render: function() {
