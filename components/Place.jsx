@@ -9,7 +9,7 @@ const ErrorComponent = require('./Error.jsx');
 
 const Place = React.createClass({
   contextTypes: {
-    Route: React.PropTypes.object,
+    RouterState: React.PropTypes.object,
     Actions: React.PropTypes.shape({
       RemovePlace: React.PropTypes.function
     })
@@ -26,7 +26,7 @@ const Place = React.createClass({
   },
 
   handleClick: function() {
-    this.context.Actions.RemovePlace(this.context.Route.params.id);
+    this.context.Actions.RemovePlace(this.context.RouterState.params.id);
   },
 
   getPlace: function(places, id) {
@@ -43,7 +43,7 @@ const Place = React.createClass({
 
     let place = this.getPlace(
       State.Places.data,
-      this.context.Route.params.id
+      this.context.RouterState.params.id
     );
 
     if (!place) return <NotFound />;

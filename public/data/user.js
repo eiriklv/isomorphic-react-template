@@ -1,5 +1,6 @@
 module.exports = {
   username: 'eiriklv',
   fullname: 'Eirik Langholm Vullum',
-  token: 'gfgfhjer562gGGgDFjfghdgsd$y34'
+  token: 'gfgfhjer562gGGgDFjfghdgsd$y34',
+  isAuthenticated: true
 };

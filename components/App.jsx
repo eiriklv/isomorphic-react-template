@@ -45,8 +45,12 @@ const App = React.createClass({
 
   statics: {
     willTransitionTo: function(transition, params, query, done) {
-      console.log(transition.context);
-      transition.redirect('/');
+      if (!transition.context.Stores.User.getData().isAuthenticated) {
+        console.log('user is not authenticated!');
+        transition.redirect('/');
+      } else {
+        console.log('user is authenticated!');
+      }
       done();
     }
   },
