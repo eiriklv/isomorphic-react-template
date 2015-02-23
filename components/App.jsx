@@ -8,7 +8,8 @@ const Navigation = require('./Navigation.jsx');
 
 const App = React.createClass({
   contextTypes: {
-    Route: React.PropTypes.object,
+    Router: React.PropTypes.any,
+    RouterState: React.PropTypes.object,
     Actions: React.PropTypes.shape({
       AddPlace: React.PropTypes.function,
       RemovePlace: React.PropTypes.function,
@@ -40,6 +41,14 @@ const App = React.createClass({
         isLoading: React.PropTypes.boolean
       })
     })
+  },
+
+  statics: {
+    willTransitionTo: function(transition, params, query, done) {
+      console.log(transition.context);
+      transition.redirect('/');
+      done();
+    }
   },
 
   render: function() {

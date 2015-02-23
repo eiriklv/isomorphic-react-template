@@ -8,21 +8,27 @@ const routes = require('./routes.jsx');
 const Stores = require('./stores');
 const Actions = require('./actions');
 
-document.addEventListener('DOMContentLoaded', function(event) {
-  let router = Router.create({
-    routes: routes,
-    location: Router.HistoryLocation
-  });
+const api = require('./api');
 
+document.addEventListener('DOMContentLoaded', function(event) {
   let initialContext = window.__initialContext || {};
   let StoreInstances = Stores(initialContext);
+  
+  let RouterInstance = Router.create({
+    routes: routes,
+    location: Router.HistoryLocation,
+    transitionContext: {
+      Stores: StoreInstances
+    }
+  });
 
-  router.run(function(Handler, routerState) {
-    let ActionInstances = Actions(StoreInstances, router);
-    
+  let ActionInstances = Actions(StoreInstances, RouterInstance, api);
+
+  RouterInstance.run(function(Handler, routerState) {    
     React.render(
       <Handler
-        Route={routerState}
+        Router={RouterInstance}
+        RouterState={routerState}
         Stores={StoreInstances}
         Actions={ActionInstances}
       />,

@@ -60,6 +60,9 @@ const Navigation = React.createClass({
           <Link to='index'>
             <small>(back to index)</small>
           </Link>
+          <Link to='landing'>
+            <small>(landing)</small>
+          </Link>
         </ul>
       </div>
     );

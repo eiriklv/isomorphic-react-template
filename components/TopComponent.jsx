@@ -9,20 +9,25 @@ const TopComponent = React.createClass({
   mixins: [StoreUpdateMixin],
 
   childContextTypes: {
-    Route: React.PropTypes.object,
+    Router: React.PropTypes.any,
+    RouterState: React.PropTypes.object,
+    Stores: React.PropTypes.object,
     Actions: React.PropTypes.object
   },
 
   propTypes: {
-    Route: React.PropTypes.object,
+    Router: React.PropTypes.any,
+    RouterState: React.PropTypes.object,
     Stores: React.PropTypes.object,
     Actions: React.PropTypes.object
   },
 
   getChildContext: function() {
     return {
-      Actions: this.props.Actions,
-      Route: this.props.Route
+      Router: React.PropTypes.object,
+      RouterState: this.props.RouterState,
+      Stores: this.props.Stores,
+      Actions: this.props.Actions
     };
   },
 
