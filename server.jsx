@@ -39,6 +39,12 @@ const renderApp = function(req, callback) {
     RouterInstance.run(function(Handler, routerState) {
       let title = DocumentTitle.rewind();
 
+      // all handlers have declared their data
+      // needs in statics.willTransitionTo
+      // - where they can call actions (async - by having action accept a optional done-callback)
+      // - where they can rehydrate on the client if applicable
+      // - this would also enable you to turn isomorphism on/off without big impact
+
       let markup = React.renderToString(
         <Handler
           Router={RouterInstance}
@@ -47,6 +53,11 @@ const renderApp = function(req, callback) {
           Actions={ActionInstances}
         />
       );
+
+      // dehydrate here
+      // initialContext = flux.dehydrate()
+      // - remove the surrounding fetchInitialContext
+      // - pass req/cookies/session to flux context / flux instance
 
       let html = React.renderToStaticMarkup(
         <Html
