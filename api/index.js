@@ -11,12 +11,12 @@ module.exports.signOut = function(payload, cb) {
 };
 
 module.exports.getUserData = function(payload, cb) {
-  setImmediate(cb.bind(null, null, {
+  setTimeout(cb.bind(null, null, {
     username: 'eiriklv',
     fullname: 'Eirik Langholm Vullum',
     token: 'gfgfhjer562gGGgDFjfghdgsd$y34',
     isAuthenticated: true
-  }));
+  }), 1000);
 };
 
 module.exports.createPlace = function(payload, cb) {
@@ -28,7 +28,7 @@ module.exports.removePlace = function(payload, cb) {
 };
 
 module.exports.getPlaces = function(payload, cb) {
-  setImmediate(cb.bind(null, null, [{
+  setTimeout(cb.bind(null, null, [{
     "id": "alghero",
     "name": "Alghero (Sardinia)"
   }, {
@@ -67,7 +67,7 @@ module.exports.getPlaces = function(payload, cb) {
   }, {
     "id": "verona",
     "name": "Lasagna (Verona)"
-  }]));
+  }]), 1000);
 };
 
 module.exports.getPlace = function(payload, cb) {
