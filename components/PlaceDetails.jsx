@@ -5,7 +5,6 @@ const Router = require('react-router');
 const DocumentTitle = require('react-document-title');
 const NotFound = require('./NotFound.jsx');
 const Loading = require('./Loading.jsx');
-const ErrorComponent = require('./Error.jsx');
 
 const PlaceDetails = React.createClass({
   contextTypes: {
@@ -25,7 +24,6 @@ const PlaceDetails = React.createClass({
 
   statics: {
     willTransitionTo: function(transition, params, query, done) {
-      console.log('will transition to PlaceDetails');
       if (!transition.context.shouldUpdate) return done();
       
       transition.context.Actions.PopulateSelectedPlaceData({
@@ -33,10 +31,6 @@ const PlaceDetails = React.createClass({
         query: query
       }, done);
     }
-  },
-
-  handleClick: function() {
-    this.context.Flux.Actions.RemovePlace(this.props.State.PlaceDetails.id);
   },
 
   render: function() {
@@ -47,7 +41,7 @@ const PlaceDetails = React.createClass({
     return (
       <DocumentTitle title={State.PlaceDetails.name}>
         <div className='place'>
-          <h2 onClick={this.handleClick}>{State.PlaceDetails.name}</h2>
+          <h2>{State.PlaceDetails.name}</h2>
           <img src={'/images/' + State.PlaceDetails.id + '.jpg'}/>
         </div>
       </DocumentTitle>

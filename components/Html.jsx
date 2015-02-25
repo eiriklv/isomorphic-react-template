@@ -2,7 +2,6 @@
 
 const React = require('react');
 
-// Handle the HTML rendering on the server
 const Html = React.createClass({
   propTypes: {
     markup: React.PropTypes.string,

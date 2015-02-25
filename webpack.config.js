@@ -1,10 +1,8 @@
-// Webpack configuration to use with the build task.
+'use strict';
 
 const webpack = require('webpack');
 
 module.exports = {
-
-  // Create also a 'lib' chunk with common libraries, e.g. react.
   entry: {
     lib: [
       'react',
@@ -22,7 +20,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('production') // This has effect on the react lib size (does envify solve this..?)
+        'NODE_ENV': JSON.stringify('production')
       }
     }),
     new webpack.optimize.CommonsChunkPlugin({
@@ -45,7 +43,6 @@ module.exports = {
     ]
   },
 
-  // the loaders are called right to left (bottom to top - same as composition)
   module: {
     preLoaders: [{
       exclude: /node_modules/,

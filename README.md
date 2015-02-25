@@ -14,8 +14,8 @@ A starting template for building an isomorphic single page app using [react.js](
 
 - [x] React components are rendered on the server first, then mounted on the client.
 - [x] Share the same routes server and client-side with [react-router](https://github.com/rackt/react-router).
-- [ ] The initial state of the app can be fetched consuming REST APIs (in progress).
-- [ ] Make it working with a Flux architecture ([in progress](https://github.com/gpbl/isomorphic-react-template/issues/4)).
+- [x] The initial state of the app can be fetched consuming REST APIs (in progress).
+- [x] Make it working with a Flux architecture ([in progress](https://github.com/gpbl/isomorphic-react-template/issues/4)).
 - [ ] i18n made easy  ([todo](https://github.com/gpbl/isomorphic-react-template/issues/2))
 - [x] Have a nice build script with cache busting.
 - [x] Live development for React components with [react-hot-loader](https://github.com/gaearon/react-hot-loader) and for scss.

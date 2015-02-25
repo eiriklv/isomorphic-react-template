@@ -25,18 +25,6 @@ var App = React.createClass({
     };
   },
 
-  statics: {
-    willTransitionTo: function(transition, params, query, done) {
-      console.log('will transition to App');
-      if (!transition.context.shouldUpdate) return done();
-      
-      transition.context.Actions.PopulateUserData({
-        params: params,
-        query: query
-      }, done);
-    }
-  },
-
   render: function() {
     return (
       <RouteHandler

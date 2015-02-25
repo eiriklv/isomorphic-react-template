@@ -6,20 +6,13 @@ const Router = require('react-router');
 const Link = Router.Link;
 
 const Landing = React.createClass({
-  statics: {
-    willTransitionTo: function(transition, params, query, done) {
-      console.log('will transition to Landing');
-      done();
-    }
-  },
-
   render: function() {
     return (
       <DocumentTitle title={'Landing'}>
         <div className='app'>
           <h1>Landing Page</h1>
           <Link to='places'>
-            {'Go the the app'}
+            {'Go look at the places!'}
           </Link>
         </div>
       </DocumentTitle>

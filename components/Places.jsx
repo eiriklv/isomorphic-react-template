@@ -23,7 +23,6 @@ const Places = React.createClass({
 
   statics: {
     willTransitionTo: function(transition, params, query, done) {
-      console.log('will transition to Places');
       if (!transition.context.shouldUpdate) return done();
       
       transition.context.Actions.PopulatePlacesData({

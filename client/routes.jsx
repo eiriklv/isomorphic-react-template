@@ -6,7 +6,6 @@ const Route = Router.Route;
 const DefaultRoute = Router.DefaultRoute;
 const NotFoundRoute = Router.NotFoundRoute;
 
-/* Components */
 const App = require('../components/App.jsx');
 const Places = require('../components/Places.jsx');
 const Landing = require('../components/Landing.jsx');

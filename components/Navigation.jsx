@@ -20,20 +20,6 @@ const Navigation = React.createClass({
     })
   },
 
-  statics: {
-    willTransitionTo: function(transition, params, query, done) {
-      console.log('will transition to Navigation');
-      done();
-    }
-  },
-
-  addNewPlace: function() {
-    this.context.Flux.Actions.AddPlace({
-      'id': 'sunndal',
-      'name': 'Sunndalsora (Norge)'
-    });
-  },
-
   mapLinks: function(places) {
     return places.map(function(place) {
       return (
@@ -53,7 +39,6 @@ const Navigation = React.createClass({
     return (
       <div className='navigation'>
         <h1>{State.App.title}</h1>
-        <h3>Hello {State.User.fullname}!</h3>
         <ul className='master'>
           {links}
           <Link to='index'>

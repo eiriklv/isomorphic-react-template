@@ -36,7 +36,6 @@ function notifyError(err) {
   });
 }
 
-// Build for production
 gulp.task('build', ['clean', 'sass', 'webpack', 'copy', 'bust'], function() {
   notifier.notify({
     icon: null,
@@ -63,12 +62,10 @@ gulp.task('sass', function() {
     .pipe(gulp.dest(paths.public + 'css'));
 });
 
-// Clean build directory
 gulp.task('clean', function(callback) {
   fs.remove(paths.build, callback);
 });
 
-// create chunks and uglify with webpack
 gulp.task('webpack', ['clean'], function(callback) {
   webpack(webpackConfig, function(err, stats) {
     if (err) return notifyError(err);
@@ -88,10 +85,8 @@ gulp.task('webpack', ['clean'], function(callback) {
   });
 });
 
-// Copy the app
 gulp.task('copy', ['copy:server', 'copy:public']);
 
-// copy server files
 gulp.task('copy:server', ['clean'], function() {
   return gulp.src(paths.server, {
       base: '.'
@@ -99,7 +94,6 @@ gulp.task('copy:server', ['clean'], function() {
     .pipe(gulp.dest(paths.build));
 });
 
-// copy public
 gulp.task('copy:public', ['clean', 'sass'], function() {
   let src = [paths.public + '**/*', '!**/*.map'];
   let filterCSS = filter('**/*.css');
@@ -115,11 +109,8 @@ gulp.task('copy:public', ['clean', 'sass'], function() {
   .pipe(gulp.dest(paths.build));
 });
 
-
-// cache busters
 const bustSrc = gulp.task('bust', ['bust:collect', 'bust:replace']);
 
-// collect resources for cache busting
 gulp.task('bust:collect', ['sass', 'webpack', 'copy'], function() {
   let src = [].concat(paths.public + '**/*');
 
@@ -130,7 +121,6 @@ gulp.task('bust:collect', ['sass', 'webpack', 'copy'], function() {
     .pipe(cachebust.resources());
 });
 
-// replace collected resources
 gulp.task('bust:replace', ['bust:collect'], function() {
   gutil.log('[bust:replace]', 'Busting ' + Object.keys(cachebust.mappings).length + ' asset(s)...');
 

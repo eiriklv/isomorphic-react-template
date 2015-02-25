@@ -10,7 +10,6 @@ const chokidar = require('chokidar');
 const async = require('async');
 const sass = require('node-sass');
 
-// Run the webpack dev server
 const webpackServer = new WebpackDevServer(webpack(webpackConfig), {
   publicPath: webpackConfig.output.publicPath,
   contentBase: 'http://localhost:3000',
@@ -24,7 +23,6 @@ const webpackServer = new WebpackDevServer(webpack(webpackConfig), {
   else debug('Webpack server listening on port 3001');
 });
 
-// Render scss files
 const renderSass = function(filename) {
   sass.render({
     file: __dirname + '/style/main.scss',
@@ -46,7 +44,6 @@ const renderSass = function(filename) {
   });
 };
 
-// Watch for scss changes using chokidar (bettar than fs.watch)
 chokidar.watch(__dirname + '/style', {
   ignored: /[\/\\]\./
 }).on('all', function(event, filename) {
@@ -55,9 +52,7 @@ chokidar.watch(__dirname + '/style', {
   renderSass(filename);
 });
 
-// Watch public dir with livereload
 const lr = livereload.createServer();
 lr.watch(__dirname + '/public');
 
-// Render for the first run
 renderSass();

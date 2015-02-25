@@ -19,7 +19,6 @@ module.exports.init = function() {
   }));
   app.use(cookieParser());
 
-  // static files with cache buster
   const publicPath = path.join(__dirname, 'public');
 
   app.use(express.static(publicPath));
@@ -29,9 +28,8 @@ module.exports.init = function() {
   }
 
   if (app.get('env') === 'development') {
-    // run livereload and webpack dev server
     require('./dev-tools');
-    // use webpack dev server for serving js files
+    
     app.use('/js', function(req, res) {
       res.redirect('http://localhost:3001/js' + req.path);
     });
@@ -41,10 +39,8 @@ module.exports.init = function() {
 };
 
 module.exports.handleErrors = function(app) {
-  // error pages
   app.use(function(err, req, res, next) {
     res.status(500);
-    // TODO: simple page for errors not in dev environment
     res.send('<pre>' + err.stack + '</pre>');
   });
 }

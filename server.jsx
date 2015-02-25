@@ -23,29 +23,14 @@ const renderApp = function(req, callback) {
     routes: routes,
     location: req.url,
     transitionContext: flux.getContext(),
-    onAbort: callback.bind(null, null), // function(redirect) {...}
-    onError: callback.bind(null)        // function(err) {...}
+    onAbort: callback.bind(null, null),
+    onError: callback.bind(null)
   });
 
-  // add the router and the api
-  // to the flux context, so that
-  // we can use it from "anywhere"
   flux.addToContext('Router', router);
   flux.addToContext('Api', api);
 
-  router.run(function(Handler, routerState) {
-    // here out stores have already been filled with data
-    // using actions and the api context
-    // - this means that we are ready to
-    // dehydrate and pass this as context
-    // to the client
-
-    // all handlers have declared their data
-    // needs in statics.willTransitionTo
-    // - where they can call actions (async - by having action accept a optional done-callback)
-    // - where they can rehydrate on the client if applicable
-    // - this would also enable you to turn isomorphism on/off without big impact
-    
+  router.run(function(Handler, routerState) {    
     let title = DocumentTitle.rewind();
     
     let markup = React.renderToString(
