@@ -2,6 +2,47 @@
 
 const request = require('superagent');
 
+const places = [{
+  "id": "alghero",
+  "name": "Alghero (Sardinia)"
+}, {
+  "id": "appennino",
+  "name": "Appennini (Umbria)"
+}, {
+  "id": "argentiera",
+  "name": "Argentiera (Sardinia)"
+}, {
+  "id": "assisi",
+  "name": "Assisi (Umbria)"
+}, {
+  "id": "firenze",
+  "name": "Firenze (Tuscany)"
+}, {
+  "id": "funes",
+  "name": "Funes (South Tyrol)"
+}, {
+  "id": "lessinia",
+  "name": "Lessinia (Veneto)"
+}, {
+  "id": "milano",
+  "name": "Milan (Lombardy)"
+}, {
+  "id": "palau",
+  "name": "Palau (Sardinia)"
+}, {
+  "id": "portoferro",
+  "name": "Portoferro (Sardinia)"
+}, {
+  "id": "sanpantaleo",
+  "name": "San Pantaleo (Sardinia)"
+}, {
+  "id": "sanzeno",
+  "name": "San Zeno (Verona)"
+}, {
+  "id": "verona",
+  "name": "Lasagna (Verona)"
+}];
+
 module.exports.signIn = function(payload, cb) {
   setImmediate(cb.bind(null, null, {}));
 };
@@ -28,48 +69,13 @@ module.exports.removePlace = function(payload, cb) {
 };
 
 module.exports.getPlaces = function(payload, cb) {
-  setTimeout(cb.bind(null, null, [{
-    "id": "alghero",
-    "name": "Alghero (Sardinia)"
-  }, {
-    "id": "appennino",
-    "name": "Appennini (Umbria)"
-  }, {
-    "id": "argentiera",
-    "name": "Argentiera (Sardinia)"
-  }, {
-    "id": "assisi",
-    "name": "Assisi (Umbria)"
-  }, {
-    "id": "firenze",
-    "name": "Firenze (Tuscany)"
-  }, {
-    "id": "funes",
-    "name": "Funes (South Tyrol)"
-  }, {
-    "id": "lessinia",
-    "name": "Lessinia (Veneto)"
-  }, {
-    "id": "milano",
-    "name": "Milan (Lombardy)"
-  }, {
-    "id": "palau",
-    "name": "Palau (Sardinia)"
-  }, {
-    "id": "portoferro",
-    "name": "Portoferro (Sardinia)"
-  }, {
-    "id": "sanpantaleo",
-    "name": "San Pantaleo (Sardinia)"
-  }, {
-    "id": "sanzeno",
-    "name": "San Zeno (Verona)"
-  }, {
-    "id": "verona",
-    "name": "Lasagna (Verona)"
-  }]), 1000);
+  setTimeout(cb.bind(null, null, places), 1000);
 };
 
-module.exports.getPlace = function(payload, cb) {
-  setImmediate(cb.bind(null, null, {}));
+module.exports.getPlaceDetails = function(id, cb) {
+  let placeDetails = places.filter(function(place) {
+    return place.id === id;
+  })[0];
+
+  setImmediate(cb.bind(null, null, placeDetails));
 };

@@ -53,7 +53,7 @@ const Navigation = React.createClass({
     return (
       <div className='navigation'>
         <h1>{State.App.title}</h1>
-        <h3 onClick={this.addNewPlace}>Hello {State.User.fullname}!</h3>
+        <h3>Hello {State.User.fullname}!</h3>
         <ul className='master'>
           {links}
           <Link to='index'>

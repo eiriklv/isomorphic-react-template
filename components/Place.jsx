@@ -19,14 +19,14 @@ const Place = React.createClass({
 
   propTypes: {
     State: React.PropTypes.shape({
-      Places: React.PropTypes.any
+      PlaceDetails: React.PropTypes.object
     })
   },
 
   statics: {
     willTransitionTo: function(transition, params, query, done) {
       console.log('will transition to Place');
-      done();
+      transition.context.Actions.UpdateSelectedPlaceDetails(params.id, done);
     }
   },
 
@@ -34,27 +34,16 @@ const Place = React.createClass({
     this.context.Flux.Actions.RemovePlace(this.context.RouterState.params.id);
   },
 
-  getPlace: function(places, id) {
-    return places.filter(function(place) {
-      return place.id === id;
-    }.bind(this))[0];
-  },
-
   render: function() {
     let State = this.props.State;
 
-    let place = this.getPlace(
-      State.Places,
-      this.context.RouterState.params.id
-    );
-
-    if (!place) return <NotFound />;
+    if (State.PlaceDetails.isLoading) return <Loading />;
 
     return (
-      <DocumentTitle title={place.name}>
+      <DocumentTitle title={State.PlaceDetails.name}>
         <div className='place'>
-          <h2 onClick={this.handleClick}>{place.name}</h2>
-          <img src={'/images/' + place.id + '.jpg'}/>
+          <h2>{State.PlaceDetails.name}</h2>
+          <img src={'/images/' + State.PlaceDetails.id + '.jpg'}/>
         </div>
       </DocumentTitle>
     );
