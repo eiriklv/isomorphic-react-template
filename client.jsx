@@ -10,7 +10,7 @@ const Flux = require('fluxomorph');
 const Stores = require('./stores');
 const Actions = require('./actions');
 
-const api = require('./api');
+const Api = require('./api');
 
 document.addEventListener('DOMContentLoaded', function(event) {
   let initialContext = window.__initialContext || {};
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
   });
 
   flux.addToContext('Router', RouterInstance);
-  flux.addToContext('Api', api);
+  flux.addToContext('Api', Api);
 
   RouterInstance.run(function(Handler, routerState) {
     flux.enableUpdates(true);

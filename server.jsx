@@ -23,14 +23,8 @@ const renderApp = function(req, callback) {
     routes: routes,
     location: req.url,
     transitionContext: flux.getContext(),
-    onAbort: function(redirect) {
-      callback({
-        redirect: redirect
-      });
-    },
-    onError: function(err) {
-      callback(err);
-    }
+    onAbort: callback.bind(null, null), // function(redirect) {...}
+    onError: callback.bind(null)        // function(err) {...}
   });
 
   // add the router and the api
@@ -69,14 +63,14 @@ const renderApp = function(req, callback) {
       />
     );
 
-    callback(null, '<!DOCTYPE html>' + html)
+    callback(null, null, '<!DOCTYPE html>' + html)
   });
 }
 
 module.exports = function(req, res, next) {
-  renderApp(req, function(err, html) {
+  renderApp(req, function(err, redirect, html) {
     if (err && err.notFound) return res.status(404).send(html);
-    if (err && err.redirect) return res.redirect(303, err.redirect.to);
+    if (!err && redirect) return res.redirect(303, redirect.to);
     if (err) return next(err);
 
     res.send(html);
