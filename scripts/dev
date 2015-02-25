@@ -1,3 +1,4 @@
 NODE_ENV=development \
 DEBUG=app:* \
+API_URL=http://localhost:3000/api \
 ./node_modules/nodemon/bin/nodemon.js ./app.js

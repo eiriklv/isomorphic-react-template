@@ -1,4 +1,4 @@
-module.exports = [{
+module.exports.places = [{
   "id": "alghero",
   "name": "Alghero (Sardinia)"
 }, {
@@ -38,3 +38,10 @@ module.exports = [{
   "id": "verona",
   "name": "Lasagna (Verona)"
 }];
+
+module.exports.user = {
+  username: 'eiriklv',
+  fullname: 'Eirik Langholm Vullum',
+  token: 'gfgfhjer562gGGgDFjfghdgsd$y34',
+  isAuthenticated: true
+};

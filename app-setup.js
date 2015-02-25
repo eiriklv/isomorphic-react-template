@@ -7,10 +7,11 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const cachebuster = require('./cachebuster');
+const mongoose = require('mongoose');
 
 const app = express();
 
-module.exports.setup = function() {
+module.exports.init = function() {
   app.use(logger(app.get('env') === 'production' ? 'combined' : 'dev'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({
@@ -54,4 +55,42 @@ module.exports.startServer = function(app, port) {
   app.listen(app.get('port'), function() {
     debug('Express ' + app.get('env') + ' server listening on port ' + this.address().port);
   });
+};
+
+module.exports.connectToDatabase = function(url) {
+  function connect() {
+    mongoose.connect(url);
+  }
+
+  mongoose.connection.on('open', function(ref) {
+    debug('open connection to mongo server.');
+  });
+
+  mongoose.connection.on('connected', function(ref) {
+    debug('connected to mongo server.');
+  });
+
+  mongoose.connection.on('disconnected', function(ref) {
+    debug('disconnected from mongo server.');
+
+    debug('retrying connection in 2 seconds..');
+    setTimeout(function() {
+      connect();
+    }.bind(this), 2000);
+  });
+
+  mongoose.connection.on('close', function(ref) {
+    debug('closed connection to mongo server');
+  });
+
+  mongoose.connection.on('error', function(err) {
+    debug('error connection to mongo server!');
+    debug(err);
+  });
+
+  mongoose.connection.on('reconnect', function(ref) {
+    debug('reconnect to mongo server.');
+  });
+
+  connect();
 };

@@ -3,13 +3,13 @@
 
 const React  = require('react');
 const Router = require('react-router');
-const routes = require('./routes.jsx');
+const routes = require('./client/routes.jsx');
 
 const Flux = require('fluxomorph');
 const stores = require('./stores');
 const actions = require('./actions');
 
-const api = require('./api');
+const api = require('./client/api');
 
 document.addEventListener('DOMContentLoaded', function(event) {
   let initialContext = window.__initialContext || {};

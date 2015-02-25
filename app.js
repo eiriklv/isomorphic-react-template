@@ -6,21 +6,16 @@ require('node-jsx').install({
 });
 
 const debug = require('debug')('app:main');
-const expressConfig = require('./express-config');
-const serverRender = require('./server.jsx');
+const appSetup = require('./app-setup');
+const app = appSetup.init();
 
-var app = expressConfig.setup();
-
-// api route handler
-app.use('/api', function(req, res) {
-  res.send({
-    user: 'eiriklv',
-    token: '4563254324gGFDDGFfwefdsSDFfsD'
-  });
-});
+// server api route handler
+app.use('/api', require('./server-api'));
 
 // app route handler
-app.use('/', serverRender);
+app.use('/', require('./server.jsx'));
 
-expressConfig.handleErrors(app);
-expressConfig.startServer(app, process.env.PORT || 3000);
+// connect to db
+appSetup.connectToDatabase(process.env.MONGO_URL || 'mongodb://localhost/isomorphic-boilerplate');
+appSetup.handleErrors(app);
+appSetup.startServer(app, process.env.PORT || 3000);

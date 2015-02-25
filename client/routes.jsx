@@ -7,12 +7,12 @@ const DefaultRoute = Router.DefaultRoute;
 const NotFoundRoute = Router.NotFoundRoute;
 
 /* Components */
-const App = require('./components/App.jsx');
-const Places = require('./components/Places.jsx');
-const Landing = require('./components/Landing.jsx');
-const Index = require('./components/Index.jsx');
-const PlaceDetails = require('./components/PlaceDetails.jsx');
-const NotFound = require('./components/NotFound.jsx');
+const App = require('../components/App.jsx');
+const Places = require('../components/Places.jsx');
+const Landing = require('../components/Landing.jsx');
+const Index = require('../components/Index.jsx');
+const PlaceDetails = require('../components/PlaceDetails.jsx');
+const NotFound = require('../components/NotFound.jsx');
 
 const routes = (
   <Route name='app' handler={App}>
