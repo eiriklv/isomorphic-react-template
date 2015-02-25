@@ -9,11 +9,9 @@ const routes = require('./routes.jsx');
 const Html = require('./components/Html.jsx');
 
 const Flux = require('fluxomorph');
-
 const Stores = require('./stores');
 const Actions = require('./actions');
-
-const api = require('./api');
+const Api = require('./api');
 
 const renderApp = function(req, callback) {
   let flux = Flux({
@@ -34,16 +32,10 @@ const renderApp = function(req, callback) {
   });
 
   flux.addToContext('Router', RouterInstance);
-  flux.addToContext('Api', api);
+  flux.addToContext('Api', Api);
 
   RouterInstance.run(function(Handler, routerState) {
     let title = DocumentTitle.rewind();
-
-    // all handlers have declared their data
-    // needs in statics.willTransitionTo
-    // - where they can call actions (async - by having action accept a optional done-callback)
-    // - where they can rehydrate on the client if applicable
-    // - this would also enable you to turn isomorphism on/off without big impact
 
     let markup = React.renderToString(
       <Handler
@@ -52,10 +44,6 @@ const renderApp = function(req, callback) {
       />
     );
 
-    // dehydrate here
-    // initialContext = flux.dehydrate()
-    // - remove the surrounding fetchInitialContext
-    // - pass req/cookies/session to flux context / flux instance
     let html = React.renderToStaticMarkup(
       <Html
         title={title}
