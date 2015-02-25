@@ -9,17 +9,17 @@ const routes = require('./routes.jsx');
 const Html = require('./components/Html.jsx');
 
 const Flux = require('fluxomorph');
-const Stores = require('./stores');
-const Actions = require('./actions');
-const Api = require('./api');
+const stores = require('./stores');
+const actions = require('./actions');
+const api = require('./api');
 
 const renderApp = function(req, callback) {
   let flux = Flux({
-    Stores: Stores,
-    Actions: Actions
+    Stores: stores,
+    Actions: actions
   });
 
-  let RouterInstance = Router.create({
+  let router = Router.create({
     routes: routes,
     location: req.url,
     transitionContext: flux.getContext(),
@@ -30,10 +30,10 @@ const renderApp = function(req, callback) {
   // add the router and the api
   // to the flux context, so that
   // we can use it from "anywhere"
-  flux.addToContext('Router', RouterInstance);
-  flux.addToContext('Api', Api);
+  flux.addToContext('Router', router);
+  flux.addToContext('Api', api);
 
-  RouterInstance.run(function(Handler, routerState) {
+  router.run(function(Handler, routerState) {
     // here out stores have already been filled with data
     // using actions and the api context
     // - this means that we are ready to

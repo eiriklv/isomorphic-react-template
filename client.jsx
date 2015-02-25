@@ -6,18 +6,17 @@ const Router = require('react-router');
 const routes = require('./routes.jsx');
 
 const Flux = require('fluxomorph');
+const stores = require('./stores');
+const actions = require('./actions');
 
-const Stores = require('./stores');
-const Actions = require('./actions');
-
-const Api = require('./api');
+const api = require('./api');
 
 document.addEventListener('DOMContentLoaded', function(event) {
   let initialContext = window.__initialContext || {};
 
   let flux = Flux({
-    Stores: Stores,
-    Actions: Actions
+    Stores: stores,
+    Actions: actions
   });
 
   flux.rehydrate(initialContext);
@@ -33,16 +32,16 @@ document.addEventListener('DOMContentLoaded', function(event) {
   // - should hide this implementation detail somewhere
   // the user does not have to care about
   
-  let RouterInstance = Router.create({
+  let router = Router.create({
     routes: routes,
     location: Router.HistoryLocation,
     transitionContext: flux.getContext()
   });
 
-  flux.addToContext('Router', RouterInstance);
-  flux.addToContext('Api', Api);
+  flux.addToContext('Router', router);
+  flux.addToContext('Api', api);
 
-  RouterInstance.run(function(Handler, routerState) {
+  router.run(function(Handler, routerState) {
     flux.enableUpdates(true);
 
     React.render(
