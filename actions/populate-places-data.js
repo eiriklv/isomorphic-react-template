@@ -10,11 +10,9 @@
 module.exports = function(context, payload, done) {
   done = done || function() {};
 
-  context.Dispatcher.emit('SET_SELECTED_PLACE_AS_LOADING');
-
-  context.Api.getPlaceDetails(payload, function(err, place) {
+  context.Api.getPlaces({}, function(err, places) {
     if (err) return done(err);
-    context.Dispatcher.emit('UPDATE_SELECTED_PLACE_DATA', place);
+    context.Dispatcher.emit('POPULATE_PLACES_DATA', places);
     done();
   });
 };

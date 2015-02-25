@@ -26,7 +26,12 @@ const Place = React.createClass({
   statics: {
     willTransitionTo: function(transition, params, query, done) {
       console.log('will transition to Place');
-      transition.context.Actions.UpdateSelectedPlaceDetails(params.id, done);
+      if (!transition.context.shouldUpdate) return done();
+      
+      transition.context.Actions.PopulateSelectedPlaceData({
+        params: params,
+        query: query
+      }, done);
     }
   },
 

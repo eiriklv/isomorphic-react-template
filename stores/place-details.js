@@ -5,7 +5,7 @@ module.exports = {
     return {};
   },
   handlers: {
-    'UPDATE_SELECTED_PLACE_DATA': function(context, payload) {
+    'POPULATE_SELECTED_PLACE_DATA': function(context, payload) {
       this.replaceState(payload);
     },
     'SET_SELECTED_PLACE_AS_LOADING': function(context) {

@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', function(event) {
   });
 
   flux.rehydrate(initialContext);
+  flux.enableUpdates(false);
+
   // - now the stores have the same data
   // as when they left the server
   // - should have a boolean saying that the rehydration
@@ -40,7 +42,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
   flux.addToContext('Router', RouterInstance);
   flux.addToContext('Api', api);
 
-  RouterInstance.run(function(Handler, routerState) {    
+  RouterInstance.run(function(Handler, routerState) {
+    flux.enableUpdates(true);
+
     React.render(
       <Handler
         Flux={flux.getContext()}

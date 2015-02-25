@@ -20,7 +20,7 @@ module.exports = {
       newState.splice(newState.indexOf(place), 1);
       this.replaceState(newState);
     },
-    'UPDATE_PLACES_DATA': function(context, payload) {
+    'POPULATE_PLACES_DATA': function(context, payload) {
       this.replaceState(payload);
     }
   }

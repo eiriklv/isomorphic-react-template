@@ -25,7 +25,12 @@ const App = React.createClass({
   statics: {
     willTransitionTo: function(transition, params, query, done) {
       console.log('will transition to App');
-      transition.context.Actions.UpdatePlaces({}, done);
+      if (!transition.context.shouldUpdate) return done();
+      
+      transition.context.Actions.PopulatePlacesData({
+        params: params,
+        query: query
+      }, done);
     }
   },
 

@@ -29,7 +29,12 @@ var TopComponent = React.createClass({
   statics: {
     willTransitionTo: function(transition, params, query, done) {
       console.log('will transition to TopComponent');
-      transition.context.Actions.UpdateUserData({}, done);
+      if (!transition.context.shouldUpdate) return done();
+      
+      transition.context.Actions.PopulateUserData({
+        params: params,
+        query: query
+      }, done);
     }
   },
 

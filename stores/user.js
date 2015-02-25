@@ -5,7 +5,7 @@ module.exports = {
     return {};
   },
   handlers: {
-    'UPDATE_USER_DATA': function(context, payload) {
+    'POPULATE_USER_DATA': function(context, payload) {
       this.replaceState(payload);
     }
   }

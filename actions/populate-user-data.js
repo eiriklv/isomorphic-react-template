@@ -12,7 +12,7 @@ module.exports = function(context, payload, done) {
 
   context.Api.getUserData({}, function(err, userData) {
     if (err) return done(err);
-    context.Dispatcher.emit('UPDATE_USER_DATA', userData);
+    context.Dispatcher.emit('POPULATE_USER_DATA', userData);
     done();
   });
 };
