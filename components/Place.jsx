@@ -10,18 +10,16 @@ const ErrorComponent = require('./Error.jsx');
 const Place = React.createClass({
   contextTypes: {
     RouterState: React.PropTypes.object,
-    Actions: React.PropTypes.shape({
-      RemovePlace: React.PropTypes.function
+    Flux: React.PropTypes.shape({
+      Actions: React.PropTypes.shape({
+        RemovePlace: React.PropTypes.function
+      })
     })
   },
 
   propTypes: {
     State: React.PropTypes.shape({
-      Places: React.PropTypes.shape({
-        isLoading: React.PropTypes.boolean,
-        error: React.PropTypes.object,
-        data: React.PropTypes.array
-      })
+      Places: React.PropTypes.any
     })
   },
 
@@ -33,7 +31,7 @@ const Place = React.createClass({
   },
 
   handleClick: function() {
-    this.context.Actions.RemovePlace(this.context.RouterState.params.id);
+    this.context.Flux.Actions.RemovePlace(this.context.RouterState.params.id);
   },
 
   getPlace: function(places, id) {
@@ -45,11 +43,8 @@ const Place = React.createClass({
   render: function() {
     let State = this.props.State;
 
-    if (State.Places.error) return <ErrorComponent error={error} />;
-    if (State.Places.isLoading) return <Loading />;
-
     let place = this.getPlace(
-      State.Places.data,
+      State.Places,
       this.context.RouterState.params.id
     );
 

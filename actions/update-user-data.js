@@ -8,5 +8,11 @@
 // - do route transitions here after async operations like login / signup
 
 module.exports = function(context, payload, done) {
-  context.Dispatcher.emit('ADD_ALERT', payload);
+  done = done || function() {};
+
+  context.Api.getUserData({}, function(err, userData) {
+    if (err) return done(err);
+    context.Dispatcher.emit('UPDATE_USER_DATA', userData);
+    done();
+  });
 };

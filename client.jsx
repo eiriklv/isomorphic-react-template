@@ -5,6 +5,8 @@ const React  = require('react');
 const Router = require('react-router');
 const routes = require('./routes.jsx');
 
+const Flux = require('fluxomorph');
+
 const Stores = require('./stores');
 const Actions = require('./actions');
 
@@ -12,6 +14,11 @@ const api = require('./api');
 
 document.addEventListener('DOMContentLoaded', function(event) {
   let initialContext = window.__initialContext || {};
+
+  let flux = Flux({
+    Stores: Stores,
+    Actions: Actions
+  });
 
   // flux.rehydrate(window.__initialContext)
   // - now the stores have the same data
@@ -22,26 +29,22 @@ document.addEventListener('DOMContentLoaded', function(event) {
   // - should have a boolean saying that the rehydration
   // has been completed, and that for the next route change
   // the data should be fetched fresh, like on the server
-
-  let StoreInstances = Stores(initialContext);
+  flux.rehydrate(initialContext);
   
   let RouterInstance = Router.create({
     routes: routes,
     location: Router.HistoryLocation,
-    transitionContext: {
-      Stores: StoreInstances
-    }
+    transitionContext: flux.getContext()
   });
 
-  let ActionInstances = Actions(StoreInstances, RouterInstance, api);
+  flux.addToContext('Router', RouterInstance);
+  flux.addToContext('Api', api);
 
   RouterInstance.run(function(Handler, routerState) {    
     React.render(
       <Handler
-        Router={RouterInstance}
+        Flux={flux.getContext()}
         RouterState={routerState}
-        Stores={StoreInstances}
-        Actions={ActionInstances}
       />,
       document.body
     );

@@ -1,54 +1,41 @@
 'use strict';
 
-const React = require('react');
-const Router = require('react-router');
-const RouteHandler = Router.RouteHandler;
-const StoreUpdateMixin = require('../mixins/store-update');
+var React = require('react');
+var Router = require('react-router');
+var RouteHandler = Router.RouteHandler;
+var StoreUpdateMixin = require('../mixins/store-update');
+var Flux = require('fluxomorph');
 
-const TopComponent = React.createClass({
-  mixins: [StoreUpdateMixin],
+var TopComponent = React.createClass({
+  mixins: [Flux.StateMixin('Flux')],
 
   childContextTypes: {
-    Router: React.PropTypes.any,
-    RouterState: React.PropTypes.object,
-    Stores: React.PropTypes.object,
-    Actions: React.PropTypes.object
+    Flux: React.PropTypes.object.isRequired,
+    RouterState: React.PropTypes.object.isRequired
   },
 
   propTypes: {
-    Router: React.PropTypes.any,
-    RouterState: React.PropTypes.object,
-    Stores: React.PropTypes.shape({
-      Places: React.PropTypes.object,
-      User: React.PropTypes.object,
-      Alerts: React.PropTypes.object,
-      App: React.PropTypes.object
-    }),
-    Actions: React.PropTypes.shape({
-      AddPlace: React.PropTypes.function,
-      RemovePlace: React.PropTypes.function,
-      DismissAlert: React.PropTypes.function,
-      DismissAllAlerts: React.PropTypes.function
-    })
+    Flux: React.PropTypes.any,
+    RouterState: React.PropTypes.object
   },
 
   getChildContext: function() {
     return {
-      Router: React.PropTypes.object,
-      RouterState: this.props.RouterState,
-      Stores: this.props.Stores,
-      Actions: this.props.Actions
+      Flux: this.props.Flux,
+      RouterState: this.props.RouterState
     };
   },
 
   statics: {
     willTransitionTo: function(transition, params, query, done) {
       console.log('will transition to TopComponent');
-      done();
+      transition.context.Actions.UpdateUserData({}, done);
     }
   },
 
   render: function() {
+    console.log(this.props);
+
     return (
       <RouteHandler
         State={this.state}

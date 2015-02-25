@@ -1,6 +1,8 @@
-exports = module.exports = function(StoresInstances, routerState) {
-  return {
-    AddPlace: require('./add-place')(StoresInstances, routerState),
-    RemovePlace: require('./remove-place')(StoresInstances, routerState)
-  };
+'use strict';
+
+exports = module.exports = {
+  AddPlace: require('./add-place'),
+  RemovePlace: require('./remove-place'),
+  UpdateUserData: require('./update-user-data'),
+  UpdatePlaces: require('./update-places')
 };

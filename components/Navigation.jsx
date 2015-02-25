@@ -6,23 +6,17 @@ const Link = Router.Link;
 
 const Navigation = React.createClass({
   contextTypes: {
-    Actions: React.PropTypes.shape({
-      AddPlace: React.PropTypes.function
+    Flux: React.PropTypes.shape({
+      Actions: React.PropTypes.shape({
+        addPlace: React.PropTypes.function
+      })
     })
   },
 
   propTypes: {
     State: React.PropTypes.shape({
-      Places: React.PropTypes.shape({
-        isLoading: React.PropTypes.boolean,
-        error: React.PropTypes.object,
-        data: React.PropTypes.array
-      }),
-      App: React.PropTypes.shape({
-        data: React.PropTypes.object,
-        error: React.PropTypes.object,
-        isLoading: React.PropTypes.boolean
-      })
+      Places: React.PropTypes.any,
+      App: React.PropTypes.any
     })
   },
 
@@ -34,7 +28,7 @@ const Navigation = React.createClass({
   },
 
   addNewPlace: function() {
-    this.context.Actions.AddPlace({
+    this.context.Flux.Actions.AddPlace({
       'id': 'sunndal',
       'name': 'Sunndalsora (Norge)'
     });
@@ -53,17 +47,17 @@ const Navigation = React.createClass({
   },
 
   render: function() {
+    console.log(this.props);
+
     let State = this.props.State;
-    let links = this.mapLinks(State.Places.data);
-    let isLoading = State.Places.isLoading;
+    let links = this.mapLinks(State.Places);
 
     return (
       <div className='navigation'>
-        <h1>{State.App.data.title}</h1>
-        <h3 onClick={this.addNewPlace}>Hello {State.User.data.fullname}!</h3>
+        <h1>{State.App.title}</h1>
+        <h3 onClick={this.addNewPlace}>Hello {State.User.fullname}!</h3>
         <ul className='master'>
           {links}
-          {isLoading ? <p>Loading..</p> : null}
           <Link to='index'>
             <small>(back to index)</small>
           </Link>

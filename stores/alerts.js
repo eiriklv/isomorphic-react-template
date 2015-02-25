@@ -1,49 +1,27 @@
-const assign = require('object-assign');
-const eventEmitter = require('events').EventEmitter;
-const util = require('util');
+'use strict';
 
-const CHANGE_EVENT = 'change';
+module.exports = {
+  getInitialState: function() {
+    return [];
+  },
+  handlers: {
+    'DISMISS_ALERT_BY_ID': function(context, payload) {
+      let alert = this.state.slice().filter(function(alert) {
+        return alert.id === id;
+      })[0];
 
-util.inherits(AlertsStore, eventEmitter);
+      if (!alert) return;
 
-function AlertsStore(initialData) {
-  if (!(this instanceof AlertsStore))
-    return new AlertsStore(initialData);
-
-  this.alerts = assign([], initialData || []);
-
-  this.eventListeners = [];
-
-  this.getData = function() {
-    return assign([], this.alerts);
-  };
-
-  this.dismissAllAlerts = function() {
-    this.alerts = [];
-    this.emit(CHANGE_EVENT);
-  };
-
-  this.dismissAlert = function(id) {
-    var alert = this.alerts.slice().filter(function(alert) {
-      return alert.id === id;
-    })[0];
-
-    if (!alert) return;
-
-    this.alerts.splice(this.alerts.indexOf(alert), 1);
-    this.emit(CHANGE_EVENT);
-  };
-
-  this.addAlert = function(alert) {
-    this.alerts.push(alert);
-    this.emit(CHANGE_EVENT);
-  };
-
-  // optional way of emitting instead of calling directly
-  // - not quite sure how to do this without testing some more
-  this.on('add', this.addAlert);
-  this.on('remove', this.dismissAlert);
-  this.on('removeAll', this.dismissAllAlerts);
+      let newState = this.state.slice();
+      newState.splice(newState.indexOf(alert), 1);
+      this.replaceState(newState);
+    },
+    'DISMISS_ALL_ALERTS': function(context, payload) {
+      this.replaceState([]);
+    },
+    'ADD_ALERT': function(context, payload) {
+      let newState = this.state.concat([payload]);
+      this.replaceState(places);
+    }
+  }
 };
-
-module.exports = AlertsStore;

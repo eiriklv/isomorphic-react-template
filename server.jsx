@@ -8,67 +8,63 @@ const DocumentTitle = require('react-document-title');
 const routes = require('./routes.jsx');
 const Html = require('./components/Html.jsx');
 
+const Flux = require('fluxomorph');
+
 const Stores = require('./stores');
 const Actions = require('./actions');
 
 const api = require('./api');
-const fetchInitialContext = require('./fetch-context')(api);
 
 const renderApp = function(req, callback) {
-  fetchInitialContext(req, function(err, initialContext) {
-    if (err) return callback(err);
+  let flux = Flux({
+    Stores: Stores,
+    Actions: Actions
+  });
 
-    let StoreInstances = Stores(initialContext);
+  let RouterInstance = Router.create({
+    routes: routes,
+    location: req.url,
+    transitionContext: flux.getContext(),
+    onAbort: function(redirect) {
+      callback({ redirect: redirect });
+    },
+    onError: function(err) {
+      callback(err);
+    }
+  });
 
-    let RouterInstance = Router.create({
-      routes: routes,
-      location: req.url,
-      transitionContext: {
-        Stores: StoreInstances
-      },
-      onAbort: function(redirect) {
-        callback({ redirect: redirect });
-      },
-      onError: function(err) {
-        callback(err);
-      }
-    });
+  flux.addToContext('Router', RouterInstance);
+  flux.addToContext('Api', api);
 
-    let ActionInstances = Actions(StoreInstances, RouterInstance, api);
+  RouterInstance.run(function(Handler, routerState) {
+    let title = DocumentTitle.rewind();
 
-    RouterInstance.run(function(Handler, routerState) {
-      let title = DocumentTitle.rewind();
+    // all handlers have declared their data
+    // needs in statics.willTransitionTo
+    // - where they can call actions (async - by having action accept a optional done-callback)
+    // - where they can rehydrate on the client if applicable
+    // - this would also enable you to turn isomorphism on/off without big impact
 
-      // all handlers have declared their data
-      // needs in statics.willTransitionTo
-      // - where they can call actions (async - by having action accept a optional done-callback)
-      // - where they can rehydrate on the client if applicable
-      // - this would also enable you to turn isomorphism on/off without big impact
+    let markup = React.renderToString(
+      <Handler
+        Flux={flux.getContext()}
+        RouterState={routerState}
+      />
+    );
 
-      let markup = React.renderToString(
-        <Handler
-          Router={RouterInstance}
-          RouterState={routerState}
-          Stores={StoreInstances}
-          Actions={ActionInstances}
-        />
-      );
+    // dehydrate here
+    // initialContext = flux.dehydrate()
+    // - remove the surrounding fetchInitialContext
+    // - pass req/cookies/session to flux context / flux instance
+    let html = React.renderToStaticMarkup(
+      <Html
+        title={title}
+        markup={markup}
+        __initialContext={flux.dehydrate()}
+      />
+    );
 
-      // dehydrate here
-      // initialContext = flux.dehydrate()
-      // - remove the surrounding fetchInitialContext
-      // - pass req/cookies/session to flux context / flux instance
-
-      let html = React.renderToStaticMarkup(
-        <Html
-          title={title}
-          markup={markup}
-          __initialContext={initialContext}
-        />
-      );
-
-      callback(null, '<!DOCTYPE html>' + html)
-    });
+    callback(null, '<!DOCTYPE html>' + html)
   });
 }
 

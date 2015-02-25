@@ -1,8 +1,8 @@
-exports = module.exports = function(context) {
-  return {
-    Places: require('./places')(context.Places),
-    User: require('./user')(context.User),
-    Alerts: require('./alerts')(context.Alerts),
-    App: require('./app')(context.App)
-  };
+'use strict';
+
+exports = module.exports = {
+  Places: require('./places'),
+  User: require('./user'),
+  Alerts: require('./alerts'),
+  App: require('./app')
 };

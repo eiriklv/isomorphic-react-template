@@ -1,49 +1,27 @@
-const assign = require('object-assign');
-const eventEmitter = require('events').EventEmitter;
-const util = require('util');
+'use strict';
 
-const CHANGE_EVENT = 'change';
-const LOADING_EVENT = 'loading';
-const ERROR_EVENT = 'failed';
+module.exports = {
+  getInitialState: function() {
+    return [];
+  },
+  handlers: {
+    'ADD_PLACE_TO_LIST': function(context, payload) {
+      let newState = this.state.concat([payload]);
+      this.replaceState(places);
+    },
+    'REMOVE_PLACE_FROM_LIST': function(context, payload) {
+      let place = this.state.slice().filter(function(place) {
+        return place.id === id;
+      })[0];
 
-util.inherits(PlacesStore, eventEmitter);
+      if (!place) return;
 
-function PlacesStore(initialData) {
-  if (!(this instanceof PlacesStore))
-    return new PlacesStore(initialData);
-
-  this.places = assign([], initialData);
-
-  this.eventListeners = [];
-
-  this.getData = function() {
-    return assign([], this.places);
-  };
-
-  this.removePlace = function(id) {
-    var place = this.places.slice().filter(function(place) {
-      return place.id === id;
-    })[0];
-
-    if (!place) return;
-
-    this.places.splice(this.places.indexOf(place), 1);
-    this.emit(CHANGE_EVENT); // tell the listeners to refetch the places from the store
-  };
-
-  this.addPlace = function(place) {
-    this.emit(LOADING_EVENT);
-
-    setTimeout(function() {
-      this.places.push(place);
-      this.emit(CHANGE_EVENT);
-    }.bind(this), 2000);
-  };
-
-  // optional way of emitting instead of calling directly
-  // - not quite sure how to do this without testing some more
-  this.on('add', this.addPlace);
-  this.on('remove', this.removePlace);
+      let newState = this.state.slice();
+      newState.splice(newState.indexOf(place), 1);
+      this.replaceState(newState);
+    },
+    'UPDATE_PLACES_DATA': function(context, payload) {
+      this.replaceState(payload);
+    }
+  }
 };
-
-module.exports = PlacesStore;
