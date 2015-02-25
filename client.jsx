@@ -21,6 +21,15 @@ document.addEventListener('DOMContentLoaded', function(event) {
   });
 
   flux.rehydrate(initialContext);
+  // - now the stores have the same data
+  // as when they left the server
+  // - should have a boolean saying that the rehydration
+  // has been completed, and that for the next route change
+  // the data should be fetched fresh, like on the server
+  // - now they are fetched fresh even if the data
+  // is already there by rehydration
+  // - should hide this implementation detail somewhere
+  // the user does not have to care about
   
   let RouterInstance = Router.create({
     routes: routes,

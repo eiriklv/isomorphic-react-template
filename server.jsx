@@ -37,6 +37,11 @@ const renderApp = function(req, callback) {
   RouterInstance.run(function(Handler, routerState) {
     let title = DocumentTitle.rewind();
 
+    // all handlers have declared their data
+    // needs in statics.willTransitionTo
+    // - where they can call actions (async - by having action accept a optional done-callback)
+    // - where they can rehydrate on the client if applicable
+    // - this would also enable you to turn isomorphism on/off without big impact
     let markup = React.renderToString(
       <Handler
         Flux={flux.getContext()}
@@ -44,6 +49,11 @@ const renderApp = function(req, callback) {
       />
     );
 
+    // here out stores have been filled with data
+    // using actions and the api
+    // - this means that we are ready to
+    // dehydrate and pass this as context
+    // to the client
     let html = React.renderToStaticMarkup(
       <Html
         title={title}
