@@ -7,7 +7,7 @@ module.exports = {
   handlers: {
     'ADD_PLACE_TO_LIST': function(context, payload) {
       let newState = this.state.concat([payload]);
-      this.replaceState(places);
+      this.replaceState(newState);
     },
     'REMOVE_PLACE_FROM_LIST': function(context, payload) {
       let place = this.state.slice().filter(function(place) {
