@@ -34,8 +34,6 @@ var TopComponent = React.createClass({
   },
 
   render: function() {
-    console.log(this.props);
-
     return (
       <RouteHandler
         State={this.state}

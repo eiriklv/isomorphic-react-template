@@ -47,8 +47,6 @@ const Navigation = React.createClass({
   },
 
   render: function() {
-    console.log(this.props);
-
     let State = this.props.State;
     let links = this.mapLinks(State.Places);
 
