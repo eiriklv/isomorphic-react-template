@@ -29,7 +29,7 @@ const renderApp = function(req, callback) {
 
   // add the router and the api
   // to the flux context, so that
-  // we can use it "anywhere"
+  // we can use it from "anywhere"
   flux.addToContext('Router', RouterInstance);
   flux.addToContext('Api', Api);
 
