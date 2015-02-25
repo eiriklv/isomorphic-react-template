@@ -57,7 +57,7 @@ module.exports.getUserData = function(payload, cb) {
     fullname: 'Eirik Langholm Vullum',
     token: 'gfgfhjer562gGGgDFjfghdgsd$y34',
     isAuthenticated: true
-  }), 1000);
+  }), 100);
 };
 
 module.exports.createPlace = function(payload, cb) {
@@ -69,7 +69,7 @@ module.exports.removePlace = function(payload, cb) {
 };
 
 module.exports.getPlaces = function(payload, cb) {
-  setTimeout(cb.bind(null, null, places), 1000);
+  setTimeout(cb.bind(null, null, places), 100);
 };
 
 module.exports.getPlaceDetails = function(id, cb) {
