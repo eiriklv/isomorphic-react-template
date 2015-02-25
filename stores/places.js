@@ -9,7 +9,7 @@ module.exports = {
       let newState = this.state.concat([payload]);
       this.replaceState(newState);
     },
-    'REMOVE_PLACE_FROM_LIST': function(context, payload) {
+    'REMOVE_PLACE_FROM_LIST': function(context, id) {
       let place = this.state.slice().filter(function(place) {
         return place.id === id;
       })[0];

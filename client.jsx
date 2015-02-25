@@ -20,15 +20,6 @@ document.addEventListener('DOMContentLoaded', function(event) {
     Actions: Actions
   });
 
-  // flux.rehydrate(window.__initialContext)
-  // - now the stores have the same data
-  // as when they left the server
-  // - will need to pass the context to
-  // the router, or have the router in 
-  // the context (?) - think of an elegant solution for this
-  // - should have a boolean saying that the rehydration
-  // has been completed, and that for the next route change
-  // the data should be fetched fresh, like on the server
   flux.rehydrate(initialContext);
   
   let RouterInstance = Router.create({
