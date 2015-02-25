@@ -8,7 +8,6 @@
 // - do route transitions here after async operations like login / signup
 
 module.exports = function(context, payload, done) {
-  console.log(payload);
   context.Dispatcher.emit('REMOVE_PLACE_FROM_LIST', payload);
   context.Router.transitionTo('/places');
 };
