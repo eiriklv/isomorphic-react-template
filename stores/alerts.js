@@ -21,7 +21,7 @@ module.exports = {
     },
     'ADD_ALERT': function(context, payload) {
       let newState = this.state.concat([payload]);
-      this.replaceState(places);
+      this.replaceState(newState);
     }
   }
 };
