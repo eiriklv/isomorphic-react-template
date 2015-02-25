@@ -1,25 +1,28 @@
 'use strict';
 
-const React = require('react');
-const Router = require('react-router');
-const DocumentTitle = require('react-document-title');
-const RouteHandler = Router.RouteHandler;
-const Navigation = require('./Navigation.jsx');
-const AuthMixin = require('../mixins/auth');
+var React = require('react');
+var Router = require('react-router');
+var RouteHandler = Router.RouteHandler;
+var Flux = require('fluxomorph');
 
-const App = React.createClass({
-  contextTypes: {
+var App = React.createClass({
+  mixins: [Flux.StateMixin('Flux')],
+
+  childContextTypes: {
     Flux: React.PropTypes.object.isRequired,
     RouterState: React.PropTypes.object.isRequired
   },
 
   propTypes: {
-    State: React.PropTypes.shape({
-      App: React.PropTypes.any,
-      Alerts: React.PropTypes.any,
-      Places: React.PropTypes.any,
-      User: React.PropTypes.any
-    })
+    Flux: React.PropTypes.any,
+    RouterState: React.PropTypes.object
+  },
+
+  getChildContext: function() {
+    return {
+      Flux: this.props.Flux,
+      RouterState: this.props.RouterState
+    };
   },
 
   statics: {
@@ -27,7 +30,7 @@ const App = React.createClass({
       console.log('will transition to App');
       if (!transition.context.shouldUpdate) return done();
       
-      transition.context.Actions.PopulatePlacesData({
+      transition.context.Actions.PopulateUserData({
         params: params,
         query: query
       }, done);
@@ -35,21 +38,10 @@ const App = React.createClass({
   },
 
   render: function() {
-    let State = this.props.State;
-
     return (
-      <DocumentTitle title={State.App.title}>
-        <div className='app'>
-          <Navigation
-            State={State}
-          />
-          <div className='detail'>
-            <RouteHandler 
-              State={State}
-            />
-          </div>
-        </div>
-      </DocumentTitle>
+      <RouteHandler
+        State={this.state}
+      />
     );
   }
 });

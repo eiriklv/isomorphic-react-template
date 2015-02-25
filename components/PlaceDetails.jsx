@@ -7,7 +7,7 @@ const NotFound = require('./NotFound.jsx');
 const Loading = require('./Loading.jsx');
 const ErrorComponent = require('./Error.jsx');
 
-const Place = React.createClass({
+const PlaceDetails = React.createClass({
   contextTypes: {
     RouterState: React.PropTypes.object,
     Flux: React.PropTypes.shape({
@@ -25,7 +25,7 @@ const Place = React.createClass({
 
   statics: {
     willTransitionTo: function(transition, params, query, done) {
-      console.log('will transition to Place');
+      console.log('will transition to PlaceDetails');
       if (!transition.context.shouldUpdate) return done();
       
       transition.context.Actions.PopulateSelectedPlaceData({
@@ -55,4 +55,4 @@ const Place = React.createClass({
   }
 });
 
-module.exports = Place;
+module.exports = PlaceDetails;

@@ -38,7 +38,7 @@ const Navigation = React.createClass({
     return places.map(function(place) {
       return (
         <li key={'place-' + place.id}>
-          <Link to='place' params={{ id: place.id }}>
+          <Link to='place-details' params={{ id: place.id }}>
             {place.name}
           </Link>
         </li>
