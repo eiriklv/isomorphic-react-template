@@ -36,7 +36,7 @@ const Place = React.createClass({
   },
 
   handleClick: function() {
-    this.context.Flux.Actions.RemovePlace(this.context.RouterState.params.id);
+    this.context.Flux.Actions.RemovePlace(this.props.State.PlaceDetails.id);
   },
 
   render: function() {
@@ -47,7 +47,7 @@ const Place = React.createClass({
     return (
       <DocumentTitle title={State.PlaceDetails.name}>
         <div className='place'>
-          <h2>{State.PlaceDetails.name}</h2>
+          <h2 onClick={this.handleClick}>{State.PlaceDetails.name}</h2>
           <img src={'/images/' + State.PlaceDetails.id + '.jpg'}/>
         </div>
       </DocumentTitle>
