@@ -6,7 +6,23 @@ const DocumentTitle = require('react-document-title');
 const RouteHandler = Router.RouteHandler;
 const Navigation = require('./Navigation.jsx');
 
+const TransitionMixin = {
+  statics: {
+    willTransitionTo: function(transition, params, query, done) {
+      console.log('will transition to Places');
+      if (!transition.context.shouldUpdate) return done();
+      
+      transition.context.Actions.PopulatePlacesData({
+        params: params,
+        query: query
+      }, done);
+    }
+  }
+};
+
 const Places = React.createClass({
+  mixins: [TransitionMixin],
+
   contextTypes: {
     Flux: React.PropTypes.object.isRequired,
     RouterState: React.PropTypes.object.isRequired
@@ -19,18 +35,6 @@ const Places = React.createClass({
       Places: React.PropTypes.any,
       User: React.PropTypes.any
     })
-  },
-
-  statics: {
-    willTransitionTo: function(transition, params, query, done) {
-      console.log('will transition to Places');
-      if (!transition.context.shouldUpdate) return done();
-      
-      transition.context.Actions.PopulatePlacesData({
-        params: params,
-        query: query
-      }, done);
-    }
   },
 
   render: function() {

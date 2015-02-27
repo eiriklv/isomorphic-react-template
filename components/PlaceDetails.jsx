@@ -7,7 +7,23 @@ const NotFound = require('./NotFound.jsx');
 const Loading = require('./Loading.jsx');
 const ErrorComponent = require('./Error.jsx');
 
+const TransitionMixin = {
+  statics: {
+    willTransitionTo: function(transition, params, query, done) {
+      console.log('will transition to PlaceDetails');
+      if (!transition.context.shouldUpdate) return done();
+      
+      transition.context.Actions.PopulateSelectedPlaceData({
+        params: params,
+        query: query
+      }, done);
+    }
+  }
+};
+
 const PlaceDetails = React.createClass({
+  mixins: [TransitionMixin],
+
   contextTypes: {
     RouterState: React.PropTypes.object,
     Flux: React.PropTypes.shape({
@@ -21,18 +37,6 @@ const PlaceDetails = React.createClass({
     State: React.PropTypes.shape({
       PlaceDetails: React.PropTypes.object
     })
-  },
-
-  statics: {
-    willTransitionTo: function(transition, params, query, done) {
-      console.log('will transition to PlaceDetails');
-      if (!transition.context.shouldUpdate) return done();
-      
-      transition.context.Actions.PopulateSelectedPlaceData({
-        params: params,
-        query: query
-      }, done);
-    }
   },
 
   handleClick: function() {
