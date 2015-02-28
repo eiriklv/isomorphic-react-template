@@ -6,14 +6,14 @@ const Link = Router.Link;
 
 const Navigation = React.createClass({
   contextTypes: {
-    Flux: React.PropTypes.object,
-    RouterState: React.PropTypes.object
+    Flux: React.PropTypes.object.isRequired,
+    RouterState: React.PropTypes.object.isRequired
   },
 
   propTypes: {
     State: React.PropTypes.shape({
-      Places: React.PropTypes.any,
-      App: React.PropTypes.any
+      Places: React.PropTypes.any.isRequired,
+      App: React.PropTypes.any.isRequired
     })
   },
 

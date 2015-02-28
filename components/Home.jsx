@@ -7,15 +7,19 @@ var Flux = require('fluxomorph');
 
 var Home = React.createClass({
   contextTypes: {
-    Flux: React.PropTypes.object.isRequired,
+    Flux: React.PropTypes.shape({
+      Actions: React.PropTypes.shape({
+        RefreshSession: React.PropTypes.func.isRequired
+      }),
+      Stores: React.PropTypes.shape({
+        Auth: React.PropTypes.object.isRequired
+      })
+    }),
     RouterState: React.PropTypes.object.isRequired
   },
 
   propTypes: {
-    State: React.PropTypes.shape({
-      App: React.PropTypes.any,
-      Auth: React.PropTypes.any
-    })
+    State: React.PropTypes.object.isRequired
   },
 
   statics: {

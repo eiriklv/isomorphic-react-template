@@ -8,13 +8,17 @@ const Loading = require('./Loading.jsx');
 
 const PlaceDetails = React.createClass({
   contextTypes: {
-    RouterState: React.PropTypes.object,
-    Flux: React.PropTypes.object
+    RouterState: React.PropTypes.object.isRequired,
+    Flux: React.PropTypes.shape({
+      Actions: React.PropTypes.shape({
+        PopulateSelectedPlaceData: React.PropTypes.func.isRequired
+      })
+    })
   },
 
   propTypes: {
     State: React.PropTypes.shape({
-      PlaceDetails: React.PropTypes.object
+      PlaceDetails: React.PropTypes.object.isRequired
     })
   },
 

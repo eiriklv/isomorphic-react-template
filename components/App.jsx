@@ -14,8 +14,8 @@ var App = React.createClass({
   },
 
   propTypes: {
-    Flux: React.PropTypes.any,
-    RouterState: React.PropTypes.object
+    Flux: React.PropTypes.object.isRequired,
+    RouterState: React.PropTypes.object.isRequired
   },
 
   getChildContext: function() {

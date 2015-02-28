@@ -4,9 +4,9 @@ const React = require('react');
 
 const Html = React.createClass({
   propTypes: {
-    markup: React.PropTypes.string,
-    title: React.PropTypes.string,
-    __initialContext: React.PropTypes.object
+    markup: React.PropTypes.string.isRequired,
+    title: React.PropTypes.string.isRequired,
+    __initialContext: React.PropTypes.object.isRequired
   },
 
   render: function() {
