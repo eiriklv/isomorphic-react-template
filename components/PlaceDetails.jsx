@@ -9,11 +9,7 @@ const Loading = require('./Loading.jsx');
 const PlaceDetails = React.createClass({
   contextTypes: {
     RouterState: React.PropTypes.object,
-    Flux: React.PropTypes.shape({
-      Actions: React.PropTypes.shape({
-        RemovePlace: React.PropTypes.function
-      })
-    })
+    Flux: React.PropTypes.object
   },
 
   propTypes: {

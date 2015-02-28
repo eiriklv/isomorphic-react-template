@@ -20,9 +20,15 @@ const Login = React.createClass({
     });
   },
 
+  dismissAlerts: function(e) {
+    e.preventDefault();
+
+    this.context.Flux.Actions.DismissAlerts();
+  },
+
   renderAlerts: function() {
     return this.props.State.Alerts.map(function(alert) {
-      return <p>{alert.message}</p>
+      return <p key={alert.id}>{alert.message}</p>
     });
   },
 
@@ -32,7 +38,9 @@ const Login = React.createClass({
         <div className='app'>
           <h1>Login page</h1>
 
-          {this.renderAlerts()}
+          <div onClick={this.dismissAlerts}>
+            {this.renderAlerts()}
+          </div>
 
           <div>
             <label>{'Email: '}</label>

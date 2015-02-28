@@ -3,7 +3,7 @@
 const UserModel = require('../server-api/models/user');
 
 module.exports = function(req, email, password, done) {
-  User.findOne({
+  UserModel.findOne({
     'email': email
   }, function(err, user) {
     if (err) return done(err);
@@ -14,7 +14,7 @@ module.exports = function(req, email, password, done) {
       });
     }
 
-    let newUser = new User();
+    let newUser = new UserModel();
     newUser.email = email;
     newUser.password = password;
 

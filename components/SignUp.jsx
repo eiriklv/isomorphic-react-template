@@ -11,12 +11,24 @@ const SignUp = React.createClass({
     RouterState: React.PropTypes.object.isRequired
   },
 
-  attemptSignUp: function(e) {
+  attemptSignup: function(e) {
     e.preventDefault();
 
-    this.context.Flux.Actions.AttemptSignUp({
+    this.context.Flux.Actions.AttemptSignup({
       email: this.refs.email.getDOMNode().value,
       password: this.refs.password.getDOMNode().value
+    });
+  },
+
+  dismissAlerts: function(e) {
+    e.preventDefault();
+
+    this.context.Flux.Actions.DismissAlerts();
+  },
+
+  renderAlerts: function() {
+    return this.props.State.Alerts.map(function(alert) {
+      return <p key={alert.id}>{alert.message}</p>
     });
   },
 
@@ -25,6 +37,10 @@ const SignUp = React.createClass({
       <DocumentTitle title={'Signup'}>
         <div className='app'>
           <h1>Signup page</h1>
+
+          <div onClick={this.dismissAlerts}>
+            {this.renderAlerts()}
+          </div>
 
           <div>
             <label>{'Email: '}</label>
@@ -42,7 +58,7 @@ const SignUp = React.createClass({
             />
             <br />
             <button
-              onClick={this.attemptSignUp}>
+              onClick={this.attemptSignup}>
               Sign up
             </button>
           </div>

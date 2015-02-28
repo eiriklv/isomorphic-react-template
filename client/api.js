@@ -31,6 +31,18 @@ module.exports.getSession = function(user, cb) {
     });
 };
 
+module.exports.signUp = function(payload, cb) {
+  request
+    .post(apiUrl + '/signup')
+    .send({
+      email: payload.email,
+      password: payload.password
+    })
+    .end(function(err, res) {
+      cb(err, res.body || {})
+    });
+};
+
 module.exports.logIn = function(payload, cb) {
   request
     .post(apiUrl + '/session')
@@ -39,7 +51,14 @@ module.exports.logIn = function(payload, cb) {
       password: payload.password
     })
     .end(function(err, res) {
-      console.log(err, res);
+      cb(err, res.body || {})
+    });
+};
+
+module.exports.logOut = function(payload, cb) {
+  request
+    .del(apiUrl + '/session')
+    .end(function(err, res) {
       cb(err, res.body || {})
     });
 };

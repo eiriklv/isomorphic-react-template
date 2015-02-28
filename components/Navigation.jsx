@@ -6,11 +6,8 @@ const Link = Router.Link;
 
 const Navigation = React.createClass({
   contextTypes: {
-    Flux: React.PropTypes.shape({
-      Actions: React.PropTypes.shape({
-        addPlace: React.PropTypes.function
-      })
-    })
+    Flux: React.PropTypes.object,
+    RouterState: React.PropTypes.object
   },
 
   propTypes: {
@@ -18,6 +15,10 @@ const Navigation = React.createClass({
       Places: React.PropTypes.any,
       App: React.PropTypes.any
     })
+  },
+
+  attemptLogout: function() {
+    this.context.Flux.Actions.AttemptLogout();
   },
 
   mapLinks: function(places) {
@@ -44,9 +45,14 @@ const Navigation = React.createClass({
           <Link to='index'>
             <small>(back to index)</small>
           </Link>
+          <br />
           <Link to='landing'>
             <small>(landing)</small>
           </Link>
+          <br />
+          <a onClick={this.attemptLogout}>
+            <small>(log out)</small>
+          </a>
         </ul>
       </div>
     );

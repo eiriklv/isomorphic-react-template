@@ -2,5 +2,6 @@
 
 exports = module.exports = {
   get: require('./get'),
-  create: require('./create')
+  create: require('./create'),
+  destroy: require('./destroy')
 };

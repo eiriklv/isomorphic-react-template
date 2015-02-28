@@ -3,13 +3,11 @@
 var express = require('express');
 var router = express();
 
-var handlers = require('../handlers/session');
+var handlers = require('../handlers/signup');
 
 exports = module.exports = function(path) {
   router.route(path)
-    .get(handlers.get)
     .post(handlers.create)
-    .delete(handlers.destroy);
 
   return router;
 };

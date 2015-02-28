@@ -34,15 +34,6 @@ const renderApp = function(req, callback) {
     isLoggedIn: !!req.user
   });
 
-  /*
-  flux.addToContext('Session', {
-    username: 'eiriklv',
-    token: 'fgrfdsfds342456524',
-    fullname: 'Eirik Vullum',
-    fromServer: true // just for debug
-  });
-  */
-
   router.run(function(Handler, routerState) {    
     let title = DocumentTitle.rewind();
     
