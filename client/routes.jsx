@@ -7,8 +7,11 @@ const DefaultRoute = Router.DefaultRoute;
 const NotFoundRoute = Router.NotFoundRoute;
 
 const App = require('../components/App.jsx');
+const Home = require('../components/Home.jsx');
 const Places = require('../components/Places.jsx');
 const Landing = require('../components/Landing.jsx');
+const Login = require('../components/Login.jsx');
+const SignUp = require('../components/SignUp.jsx');
 const Index = require('../components/Index.jsx');
 const PlaceDetails = require('../components/PlaceDetails.jsx');
 const NotFound = require('../components/NotFound.jsx');
@@ -16,10 +19,14 @@ const NotFound = require('../components/NotFound.jsx');
 const routes = (
   <Route name='app' handler={App}>
     <Route name='landing' path='/' handler={Landing} />
-    <Route name='places' path='/places' handler={Places}>
-      <DefaultRoute name='index' handler={Index} />
-      <Route name='place-details' path='/places/:id' handler={PlaceDetails} />
-      <NotFoundRoute name='notfound' handler={NotFound} />
+    <Route name='login' path='/login' handler={Login} />
+    <Route name='signup' path='/signup' handler={SignUp} />
+    <Route name='home' handler={Home}>
+      <Route name='places' path='/places' handler={Places}>
+        <DefaultRoute name='index' handler={Index} />
+        <Route name='place-details' path='/places/:id' handler={PlaceDetails} />
+        <NotFoundRoute name='notfound' handler={NotFound} />
+      </Route>
     </Route>
   </Route>
 );

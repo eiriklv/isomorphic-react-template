@@ -20,3 +20,11 @@ module.exports.getPlaceDetails = function(id, cb) {
       cb(err, res.body || {});
     });
 };
+
+module.exports.getLoginStatus = function(payload, cb) {
+  setImmediate(cb.bind(null, null, {
+    username: 'eiriklv',
+    token: 'fgrfdsfds342456524',
+    fullname: 'Eirik Vullum'
+  }));
+};

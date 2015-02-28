@@ -3,5 +3,6 @@
 exports = module.exports = {
   Places: require('./places'),
   PlaceDetails: require('./place-details'),
-  App: require('./app')
+  App: require('./app'),
+  Auth: require('./auth')
 };
