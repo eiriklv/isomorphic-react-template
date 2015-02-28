@@ -21,10 +21,25 @@ module.exports.getPlaceDetails = function(id, cb) {
     });
 };
 
-module.exports.getLoginStatus = function(payload, cb) {
-  setImmediate(cb.bind(null, null, {
-    username: 'eiriklv',
-    token: 'fgrfdsfds342456524',
-    fullname: 'Eirik Vullum'
-  }));
+module.exports.getSession = function(user, cb) {
+  if (user) return setImmediate(cb.bind(null, null, user));
+  
+  request
+    .get(apiUrl + '/session')
+    .end(function(err, res) {
+      cb(err, res.body || {});
+    });
+};
+
+module.exports.logIn = function(payload, cb) {
+  request
+    .post(apiUrl + '/session')
+    .send({
+      email: payload.email,
+      password: payload.password
+    })
+    .end(function(err, res) {
+      console.log(err, res);
+      cb(err, res.body || {})
+    });
 };

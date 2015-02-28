@@ -8,10 +8,10 @@ module.exports = {
     };
   },
   handlers: {
-    'SET_USER_AS_LOGGED_IN': function(context, user) {
+    'SET_USER_AS_LOGGED_IN': function(context, payload) {
       this.replaceState({
-        isLoggedIn: true,
-        user: user
+        isLoggedIn: !!payload.isLoggedIn,
+        user: payload.user
       });
     },
     'SET_USER_AS_LOGGED_OUT': function(context) {

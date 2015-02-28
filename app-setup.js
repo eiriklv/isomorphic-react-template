@@ -1,25 +1,43 @@
 'use strict';
 
+const config = require('./config');
 const debug = require('debug')('app:config');
 const express = require('express');
 const path = require('path');
 const logger = require('morgan');
+const cachebuster = require('./cachebuster');
+
+const mongoose = require('mongoose');
+
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const cachebuster = require('./cachebuster');
-const mongoose = require('mongoose');
+const session = require('express-session');
+const passport = require('passport');
 
 const app = express();
 
 module.exports.init = function() {
   app.use(logger(app.get('env') === 'production' ? 'combined' : 'dev'));
+  
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({
-    extended: false
+    extended: true
   }));
+
   app.use(cookieParser());
 
-  const publicPath = path.join(__dirname, 'public');
+  app.use(session({
+    secret: config.get('session.secret'),
+    store: session.MemoryStore(),
+    name: config.get('session.key'),
+    resave: true,
+    saveUninitialized: true
+  }));
+
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  let publicPath = path.join(__dirname, 'public');
 
   app.use(express.static(publicPath));
 
@@ -29,7 +47,7 @@ module.exports.init = function() {
 
   if (app.get('env') === 'development') {
     require('./dev-tools');
-    
+
     app.use('/js', function(req, res) {
       res.redirect('http://localhost:3001/js' + req.path);
     });

@@ -29,6 +29,19 @@ const renderApp = function(req, callback) {
 
   flux.addToContext('Router', router);
   flux.addToContext('Api', api);
+  flux.addToContext('User', {
+    user: req.user,
+    isLoggedIn: !!req.user
+  });
+
+  /*
+  flux.addToContext('Session', {
+    username: 'eiriklv',
+    token: 'fgrfdsfds342456524',
+    fullname: 'Eirik Vullum',
+    fromServer: true // just for debug
+  });
+  */
 
   router.run(function(Handler, routerState) {    
     let title = DocumentTitle.rewind();

@@ -11,9 +11,16 @@ var Home = React.createClass({
     RouterState: React.PropTypes.object.isRequired
   },
 
+  propTypes: {
+    State: React.PropTypes.shape({
+      App: React.PropTypes.any,
+      Auth: React.PropTypes.any
+    })
+  },
+
   statics: {
     willTransitionTo: function(transition, params, query, done) {
-      transition.context.Actions.RefreshLoginStatus({}, function(err) {
+      transition.context.Actions.RefreshSession(transition.context.User, function(err) {
         if (!transition.context.Stores.Auth.getState().isLoggedIn) {
           transition.redirect('/login');
         }

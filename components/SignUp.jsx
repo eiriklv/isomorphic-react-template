@@ -6,15 +6,18 @@ const Router = require('react-router');
 const Link = Router.Link;
 
 const SignUp = React.createClass({
-  saveAndContinue: function(e) {
+  contextTypes: {
+    Flux: React.PropTypes.object.isRequired,
+    RouterState: React.PropTypes.object.isRequired
+  },
+
+  attemptSignUp: function(e) {
     e.preventDefault();
 
-    var data = {
+    this.context.Flux.Actions.AttemptSignUp({
       email: this.refs.email.getDOMNode().value,
       password: this.refs.password.getDOMNode().value
-    };
-
-    console.log(data);
+    });
   },
 
   render: function() {
@@ -38,9 +41,11 @@ const SignUp = React.createClass({
               defaultValue={''}
             />
             <br />
-            <button onClick={this.saveAndContinue}>Save and Continue</button>
+            <button
+              onClick={this.attemptSignUp}>
+              Sign up
+            </button>
           </div>
-
 
           <Link to='landing'>
             {'Go back to landing!'}
@@ -51,6 +56,7 @@ const SignUp = React.createClass({
           <Link to='login'>
             {'Go to login!'}
           </Link>
+
         </div>
       </DocumentTitle>
     );
