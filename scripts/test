@@ -1,5 +1,6 @@
-export NODE_ENV=development \
-export DEBUG=app:* \
+export NODE_ENV=production \
+export DEBUG=* \
 export API_URL=http://localhost:3000/api \
 export MONGO_URL=mongodb://localhost/isomorphic-boilerplate \
-./node_modules/nodemon/bin/nodemon.js ./app.js
+
+env

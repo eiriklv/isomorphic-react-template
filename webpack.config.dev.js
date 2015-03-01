@@ -17,6 +17,12 @@ module.exports = {
   },
 
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': Object.keys(process.env).reduce(function(o, k) {
+        o[k] = JSON.stringify(process.env[k]);
+        return o;
+      }, {})
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'lib',
@@ -35,11 +41,7 @@ module.exports = {
   module: {
     preLoaders: [{
       exclude: /node_modules/,
-      loaders: [
-        'transform/cacheable?brfs',
-        'babel',
-        'envify-loader'
-      ]
+      loaders: ['babel']
     }],
     postLoaders: [],
     loaders: [

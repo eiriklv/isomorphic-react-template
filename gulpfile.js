@@ -19,7 +19,20 @@ const paths = {
   build: 'build/',
   public: 'public/',
   sass: 'style/main.scss',
-  server: ['package.json', 'app.js', '*.jsx', 'cachebuster.js', 'components/**/*.jsx']
+  server: [
+    'package.json',
+    'app.js',
+    'app-setup.js',
+    '*.jsx',
+    'cachebuster.js',
+    'components/**/*.jsx',
+    'config.js',
+    'stores/**',
+    'actions/**',
+    'client/**',
+    'auth/**',
+    'server-api/**'
+  ]
 };
 
 const pkg = require('./package.json');

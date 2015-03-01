@@ -1,24 +1,45 @@
 'use strict';
 
+const url = require('url');
 const config = require('./config');
 const debug = require('debug')('app:config');
 const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 const cachebuster = require('./cachebuster');
-
 const mongoose = require('mongoose');
-
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const RedisStore = require('connect-redis')(session);
 const passport = require('passport');
 
 const app = express();
 
+function createSessionStore() {
+  var authObject;
+
+  if ('production' == config.get('env')) {
+    var parsedUrl = url.parse(config.get('redis.url'));
+
+    authObject = {
+      prefix: config.get('redis.session.prefix'),
+      host: parsedUrl.hostname,
+      port: parsedUrl.port,
+      db: config.get('redis.db'),
+      pass: parsedUrl.auth ? parsedUrl.auth.split(":")[1] : null,
+      secret: config.get('session.secret')
+    };
+
+    return new RedisStore(authObject);
+  } else {
+    return (new session.MemoryStore());
+  }
+};
+
 module.exports.init = function() {
   app.use(logger(app.get('env') === 'production' ? 'combined' : 'dev'));
-  
+
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({
     extended: true
@@ -28,7 +49,7 @@ module.exports.init = function() {
 
   app.use(session({
     secret: config.get('session.secret'),
-    store: session.MemoryStore(),
+    store: createSessionStore(),
     name: config.get('session.key'),
     resave: true,
     saveUninitialized: true

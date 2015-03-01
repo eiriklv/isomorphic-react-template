@@ -13,15 +13,16 @@ module.exports = {
 
   output: {
     path: './build/public/js',
-    publicPath: '/js/',
-    filename: 'main.js'
+    filename: 'main.js',
   },
 
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
+      'process.env': Object.keys(process.env).reduce(function(o, k) {
+        o[k] = JSON.stringify(process.env[k]);
+        console.log(o);
+        return o;
+      }, {})
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'lib',
@@ -46,11 +47,7 @@ module.exports = {
   module: {
     preLoaders: [{
       exclude: /node_modules/,
-      loaders: [
-        'transform/cacheable?brfs',
-        'babel',
-        'envify-loader'
-      ]
+      loaders: ['babel']
     }],
     postLoaders: [],
     loaders: []

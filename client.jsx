@@ -1,4 +1,3 @@
-/* global document */
 'use strict';
 
 const React  = require('react');
