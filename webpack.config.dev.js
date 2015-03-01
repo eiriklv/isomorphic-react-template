@@ -17,12 +17,7 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': Object.keys(process.env).reduce(function(o, k) {
-        o[k] = JSON.stringify(process.env[k]);
-        return o;
-      }, {})
-    }),
+    new webpack.EnvironmentPlugin(require('./env-vars')),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'lib',
@@ -44,15 +39,13 @@ module.exports = {
       loaders: ['babel']
     }],
     postLoaders: [],
-    loaders: [
-      {
-        exclude: /node_modules/,
-        test: /\.jsx$/,
-        loaders: [
-          'react-hot'
-        ]
-      }
-    ]
+    loaders: [{
+      exclude: /node_modules/,
+      test: /\.jsx$/,
+      loaders: [
+        'react-hot'
+      ]
+    }]
   },
   devtool: '#inline-source-map',
   externals: {}

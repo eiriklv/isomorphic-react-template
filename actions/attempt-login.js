@@ -4,7 +4,10 @@ module.exports = function(context, payload, done) {
   done = done || function() {};
 
   context.Api.logIn(payload, function(err, result) {
-    if (err) return done(err);
+    if (err) {
+      context.Dispatcher.emit('ADD_ALERT', err);
+      return done();
+    }
 
     if (result.info) {
       context.Dispatcher.emit('ADD_ALERT', result.info);

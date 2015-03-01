@@ -27,7 +27,8 @@ const Places = React.createClass({
       
       transition.context.Actions.PopulatePlacesData({
         params: params,
-        query: query
+        query: query,
+        user: transition.context.User || {}
       }, done);
     }
   },

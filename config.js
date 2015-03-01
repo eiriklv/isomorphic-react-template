@@ -28,7 +28,7 @@ var config = convict({
     secret: {
       doc: 'The application secret (sessions).',
       default: 'somesillysecret',
-      env: 'APPSECRET'
+      env: 'SESSION_SECRET'
     }
   },
   port: {
@@ -44,10 +44,10 @@ var config = convict({
       env: 'API_PATH'
     },
     url: {
-      doc: 'The client api url path (relative)',
-      default: '/api',
+      doc: 'The client api url path (absolute)',
+      default: 'http://localhost:3000/api',
       env: 'API_URL'
-    },
+    }
   },
   domain: {
     doc: 'The client domain (hostname)',

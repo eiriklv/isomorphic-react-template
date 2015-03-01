@@ -8,16 +8,22 @@ const user = require('./dummy-data').user;
 module.exports.getPlaces = function(payload, cb) {
   request
     .get(apiUrl + '/places')
+    .query(JSON.parse(JSON.stringify(payload)))
     .end(function(err, res) {
-      cb(err, res.body || []);
+      if (err) return cb(err);
+      if (res.error) return cb(res.error);
+      cb(null, res.body || []);
     });
 };
 
-module.exports.getPlaceDetails = function(id, cb) {
+module.exports.getPlaceDetails = function(payload, cb) {
   request
-    .get(apiUrl + '/places/' + id)
+    .get(apiUrl + '/places/' + payload.params.id)
+    .query(JSON.parse(JSON.stringify(payload)))
     .end(function(err, res) {
-      cb(err, res.body || {});
+      if (err) return cb(err);
+      if (res.error) return cb(res.error);
+      cb(null, res.body || {});
     });
 };
 
@@ -27,7 +33,9 @@ module.exports.getSession = function(user, cb) {
   request
     .get(apiUrl + '/session')
     .end(function(err, res) {
-      cb(err, res.body || {});
+      if (err) return cb(err);
+      if (res.error) return cb(res.error);
+      cb(null, res.body || {});
     });
 };
 
@@ -39,7 +47,9 @@ module.exports.signUp = function(payload, cb) {
       password: payload.password
     })
     .end(function(err, res) {
-      cb(err, res.body || {})
+      if (err) return cb(err);
+      if (res.error) return cb(res.error);
+      cb(null, res.body || {});
     });
 };
 
@@ -51,7 +61,9 @@ module.exports.logIn = function(payload, cb) {
       password: payload.password
     })
     .end(function(err, res) {
-      cb(err, res.body || {})
+      if (err) return cb(err);
+      if (res.error) return cb(res.error);
+      cb(null, res.body || {});
     });
 };
 
@@ -59,6 +71,8 @@ module.exports.logOut = function(payload, cb) {
   request
     .del(apiUrl + '/session')
     .end(function(err, res) {
-      cb(err, res.body || {})
+      if (err) return cb(err);
+      if (res.error) return cb(res.error);
+      cb(null, res.body || {});
     });
 };

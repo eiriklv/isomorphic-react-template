@@ -17,15 +17,17 @@ const Navigation = React.createClass({
     })
   },
 
-  attemptLogout: function() {
+  attemptLogout: function(e) {
+    e.preventDefault();
+
     this.context.Flux.Actions.AttemptLogout();
   },
 
   mapLinks: function(places) {
     return places.map(function(place) {
       return (
-        <li key={'place-' + place.id}>
-          <Link to='place-details' params={{ id: place.id }}>
+        <li key={'place-' + place._id}>
+          <Link to='place-details' params={{ id: place._id }}>
             {place.name}
           </Link>
         </li>
@@ -35,7 +37,7 @@ const Navigation = React.createClass({
 
   render: function() {
     let State = this.props.State;
-    let links = this.mapLinks(State.Places);
+    let links = this.mapLinks(State.Places.data);
 
     return (
       <div className='navigation'>
@@ -50,7 +52,7 @@ const Navigation = React.createClass({
             <small>(landing)</small>
           </Link>
           <br />
-          <a onClick={this.attemptLogout}>
+          <a href='#' onClick={this.attemptLogout}>
             <small>(log out)</small>
           </a>
         </ul>

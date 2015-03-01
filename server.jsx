@@ -19,12 +19,14 @@ const renderApp = function(req, callback) {
     Actions: actions
   });
 
+  let cb = createCallback(callback);
+
   let router = Router.create({
     routes: routes,
     location: req.url,
     transitionContext: flux.getContext(),
-    onAbort: callback.bind(null, null),
-    onError: callback.bind(null)
+    onAbort: cb.bind(null, null),
+    onError: cb.bind(null)
   });
 
   flux.addToContext('Router', router);
@@ -52,9 +54,9 @@ const renderApp = function(req, callback) {
       />
     );
 
-    callback(null, null, '<!DOCTYPE html>' + html)
+    cb(null, null, '<!DOCTYPE html>' + html)
   });
-}
+};
 
 module.exports = function(req, res, next) {
   renderApp(req, function(err, redirect, html) {
@@ -65,3 +67,15 @@ module.exports = function(req, res, next) {
     res.send(html);
   })
 };
+
+function createCallback(cb) {
+  let count = 0;
+
+  return function(err, redirect, html) {
+    if ((count++) < 1) {
+      cb(err, redirect, html);
+    } else {
+      debug('trying to call callback twice (res.send) - server.jsx');
+    }
+  };
+}

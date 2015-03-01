@@ -63,7 +63,12 @@ module.exports.init = function() {
   app.use(express.static(publicPath));
 
   if (app.get('env') === 'production') {
-    app.get(cachebuster.path, cachebuster.remove, express.static(publicPath), cachebuster.restore);
+    app.get(
+      cachebuster.path,
+      cachebuster.remove,
+      express.static(publicPath),
+      cachebuster.restore
+    );
   }
 
   if (app.get('env') === 'development') {
@@ -80,15 +85,14 @@ module.exports.init = function() {
 module.exports.handleErrors = function(app) {
   app.use(function(err, req, res, next) {
     res.status(500);
+    console.log('error handler:', err);
     res.send('<pre>' + err.stack + '</pre>');
   });
 }
 
 module.exports.startServer = function(app, port) {
-  app.set('port', port);
-
-  app.listen(app.get('port'), function() {
-    debug('Express ' + app.get('env') + ' server listening on port ' + this.address().port);
+  app.listen(config.get('port'), function() {
+    debug('Express ' + config.get('env') + ' server listening on port ' + this.address().port);
   });
 };
 

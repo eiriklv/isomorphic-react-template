@@ -28,7 +28,8 @@ const PlaceDetails = React.createClass({
       
       transition.context.Actions.PopulateSelectedPlaceData({
         params: params,
-        query: query
+        query: query,
+        user: transition.context.User || {}
       }, done);
     }
   },
@@ -37,12 +38,13 @@ const PlaceDetails = React.createClass({
     let State = this.props.State;
 
     if (State.PlaceDetails.isLoading) return <Loading />;
+    if (State.PlaceDetails.notFound) return <NotFound />;
 
     return (
-      <DocumentTitle title={State.PlaceDetails.name}>
+      <DocumentTitle title={State.PlaceDetails.data.name}>
         <div className='place'>
-          <h2>{State.PlaceDetails.name}</h2>
-          <img src={'/images/' + State.PlaceDetails.id + '.jpg'}/>
+          <h2>{State.PlaceDetails.data.name}</h2>
+          <img src={'/images/' + State.PlaceDetails.data.id + '.jpg'}/>
         </div>
       </DocumentTitle>
     );
