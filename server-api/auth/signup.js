@@ -1,6 +1,6 @@
 'use strict';
 
-const UserModel = require('../server-api/models/user');
+const UserModel = require('../models/user');
 
 module.exports = function(req, email, password, done) {
   UserModel.findOne({

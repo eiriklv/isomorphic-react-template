@@ -8,7 +8,7 @@ module.exports = {
       'react',
       'react-router'
     ],
-    main: './client.jsx'
+    main: './flux/client.jsx'
   },
 
   output: {

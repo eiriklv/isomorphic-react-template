@@ -7,7 +7,7 @@ module.exports = {
   entry: [
     'webpack-dev-server/client?http://localhost:3001',
     'webpack/hot/dev-server',
-    './client.jsx'
+    './flux/client.jsx'
   ],
 
   output: {

@@ -23,14 +23,10 @@ const paths = {
     'package.json',
     'app.js',
     'app-setup.js',
-    '*.jsx',
+    'env-vars.js',
     'cachebuster.js',
-    'components/**/*.jsx',
     'config.js',
-    'stores/**',
-    'actions/**',
-    'client/**',
-    'auth/**',
+    'flux/**',
     'server-api/**'
   ]
 };

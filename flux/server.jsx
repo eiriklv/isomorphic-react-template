@@ -5,13 +5,13 @@ const React = require('react');
 const Router = require('react-router');
 const DocumentTitle = require('react-document-title');
 
-const routes = require('./client/routes.jsx');
+const routes = require('./routes.jsx');
 const Html = require('./components/Html.jsx');
 
 const Flux = require('fluxomorph');
 const stores = require('./stores');
 const actions = require('./actions');
-const api = require('./client/api');
+const api = require('./api');
 
 const renderApp = function(req, callback) {
   let flux = Flux({

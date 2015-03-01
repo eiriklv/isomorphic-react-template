@@ -4,7 +4,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const signup = require('./signup');
 const login = require('./login');
 
-const UserModel = require('../server-api/models/user');
+const UserModel = require('../models/user');
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
