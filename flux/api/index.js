@@ -8,9 +8,9 @@ const user = require('./dummy-data').user;
 module.exports.getPlaces = function(payload, cb) {
   request
     .get(apiUrl + '/places')
-    .query(payload.userId ? {
+    .query({
       id: payload.userId
-    } : {})
+    })
     .end(function(err, res) {
       if (err) return cb(err);
       if (res.error) return cb(res.error);
@@ -21,9 +21,9 @@ module.exports.getPlaces = function(payload, cb) {
 module.exports.getPlaceDetails = function(payload, cb) {
   request
     .get(apiUrl + '/places/' + payload.params.id)
-    .query(payload.userId ? {
+    .query({
       id: payload.userId
-    } : {})
+    })
     .end(function(err, res) {
       if (err) return cb(err);
       if (res.error) return cb(res.error);
