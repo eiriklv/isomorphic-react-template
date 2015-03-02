@@ -1,13 +1,13 @@
 'use strict';
 
-const placesServices = require('../../services/places');
+const Place = require('../../models/place');
 
 exports = module.exports = function(req, res) {
   let userId = req.user ?
     req.user._id :
     req.query.id;
 
-  placesServices.get({
+  Place.findOneByIdAndOwner({
     placeId: req.params.id,
     userId: userId
   }, function(err, result) {
