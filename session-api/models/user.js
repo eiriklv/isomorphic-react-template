@@ -13,8 +13,12 @@ var schema = mongoose.Schema({
   },
 });
 
+schema.methods.generateHash = function(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null); // this is syncronous (future: async)
+};
+
 schema.methods.validPassword = function(password) {
-  return (password === this.password);
+  return bcrypt.compareSync(password, this.password); // this is syncronous (future: async)
 };
 
 module.exports = mongoose.model('user', schema);

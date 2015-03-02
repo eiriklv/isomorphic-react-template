@@ -16,7 +16,7 @@ module.exports = function(req, email, password, done) {
 
     let newUser = new UserModel();
     newUser.email = email;
-    newUser.password = password;
+    newUser.password = newUser.generateHash(password);
 
     newUser.save(function(err, product) {
       if (err) return done(err);
