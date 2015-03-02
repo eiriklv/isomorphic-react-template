@@ -17,7 +17,7 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.EnvironmentPlugin(require('./env-vars')),
+    new webpack.EnvironmentPlugin(require('./white-listed-env-vars')),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'lib',
       filename: 'lib.js'

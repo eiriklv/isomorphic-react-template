@@ -33,6 +33,7 @@ const renderApp = function(req, callback) {
   flux.addToContext('Api', api);
   flux.addToContext('User', {
     user: req.user,
+    id: req.user ? req.user._id.toString() : null,
     isLoggedIn: !!req.user
   });
 

@@ -3,11 +3,12 @@
 const placesServices = require('../../services/places');
 
 exports = module.exports = function(req, res) {
+  let userId = req.user ?
+    req.user._id :
+    req.query.id;
+
   placesServices.getAll({
-    params: req.params,
-    body: req.body,
-    query: req.query,
-    user: req.user || req.query.user
+    userId: userId
   }, function(err, result) {
     if (err) {
       return res.status(400).send({

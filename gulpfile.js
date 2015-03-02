@@ -22,8 +22,8 @@ const paths = {
   server: [
     'package.json',
     'app.js',
-    'app-setup.js',
-    'env-vars.js',
+    'app-init-setup.js',
+    'white-listed-env-vars.js',
     'cachebuster.js',
     'config.js',
     'flux/**',

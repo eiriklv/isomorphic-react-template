@@ -8,9 +8,9 @@ module.exports = function(context, payload, done) {
   context.Api.getPlaces({
     params: payload.params,
     query: payload.query,
-    user: payload.user.user
+    userId: context.User ? context.User.id : null
   }, function(err, places) {
-    if (err) {
+    if (err || !places) {
       context.Dispatcher.emit('POPULATE_PLACES_DATA', []);
       context.Dispatcher.emit('ADD_ALERT', err);
       return done();

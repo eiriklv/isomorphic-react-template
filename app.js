@@ -6,7 +6,7 @@ require('node-jsx').install({
 
 const debug = require('debug')('app:main');
 const config = require('./config');
-const appSetup = require('./app-setup');
+const appSetup = require('./app-init-setup');
 const app = appSetup.init();
 
 app.use('/api', require('./server-api'));

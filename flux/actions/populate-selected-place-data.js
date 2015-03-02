@@ -8,9 +8,9 @@ module.exports = function(context, payload, done) {
   context.Api.getPlaceDetails({
     params: payload.params,
     query: payload.query,
-    user: payload.user.user
+    userId: context.User ? context.User.id : null
   }, function(err, place) {
-    if (err) {
+    if (err || !place) {
       context.Dispatcher.emit('SET_SELECTED_PLACE_AS_NOT_FOUND');
       context.Dispatcher.emit('ADD_ALERT', err);
       return done();

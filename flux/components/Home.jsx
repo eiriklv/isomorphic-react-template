@@ -24,7 +24,7 @@ var Home = React.createClass({
 
   statics: {
     willTransitionTo: function(transition, params, query, done) {
-      transition.context.Actions.RefreshSession(transition.context.User, function(err) {
+      transition.context.Actions.RefreshSession(function(err) {
         if (!transition.context.Stores.Auth.getState().isLoggedIn) {
           transition.redirect('/login');
         }

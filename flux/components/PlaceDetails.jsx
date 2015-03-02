@@ -28,8 +28,7 @@ const PlaceDetails = React.createClass({
       
       transition.context.Actions.PopulateSelectedPlaceData({
         params: params,
-        query: query,
-        user: transition.context.User || {}
+        query: query
       }, done);
     }
   },

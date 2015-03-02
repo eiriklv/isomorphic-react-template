@@ -8,7 +8,9 @@ const user = require('./dummy-data').user;
 module.exports.getPlaces = function(payload, cb) {
   request
     .get(apiUrl + '/places')
-    .query(JSON.parse(JSON.stringify(payload)))
+    .query(payload.userId ? {
+      id: payload.userId
+    } : {})
     .end(function(err, res) {
       if (err) return cb(err);
       if (res.error) return cb(res.error);
@@ -19,7 +21,9 @@ module.exports.getPlaces = function(payload, cb) {
 module.exports.getPlaceDetails = function(payload, cb) {
   request
     .get(apiUrl + '/places/' + payload.params.id)
-    .query(JSON.parse(JSON.stringify(payload)))
+    .query(payload.userId ? {
+      id: payload.userId
+    } : {})
     .end(function(err, res) {
       if (err) return cb(err);
       if (res.error) return cb(res.error);
@@ -29,7 +33,7 @@ module.exports.getPlaceDetails = function(payload, cb) {
 
 module.exports.getSession = function(user, cb) {
   if (user) return setImmediate(cb.bind(null, null, user));
-  
+
   request
     .get(apiUrl + '/session')
     .end(function(err, res) {
