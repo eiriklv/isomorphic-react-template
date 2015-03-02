@@ -18,6 +18,7 @@ exports = module.exports = function(req, res, next) {
       if (err) {
         return next(err);
       }
+      
       if (req.query.redirect) {
         return res.redirect(req.query.redirect);
       }

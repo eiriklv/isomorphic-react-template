@@ -5,6 +5,10 @@ const DocumentTitle = require('react-document-title');
 const Router = require('react-router');
 const Link = Router.Link;
 
+const qs = require('qs');
+const apiUrl = process.env.API_URL;
+const successRedirect = 'http://localhost:3000/places';
+
 const SignUp = React.createClass({
   contextTypes: {
     Flux: React.PropTypes.object.isRequired,
@@ -32,6 +36,12 @@ const SignUp = React.createClass({
     });
   },
 
+  getServerRedirect: function() {
+    return qs.stringify({
+      redirect: successRedirect
+    });
+  },
+
   render: function() {
     return (
       <DocumentTitle title={'Signup'}>
@@ -42,26 +52,36 @@ const SignUp = React.createClass({
             {this.renderAlerts()}
           </div>
 
-          <div>
-            <label>{'Email: '}</label>
-            <input
-              type='email'
-              ref='email'
-              defaultValue={''}
-            />
-            <br />
-            <label>{'Password: '}</label>
-            <input
-              type='password'
-              ref='password'
-              defaultValue={''}
-            />
-            <br />
-            <button
-              onClick={this.attemptSignup}>
-              Sign up
-            </button>
-          </div>
+          <form method='POST' action={apiUrl + '/signup?' + this.getServerRedirect()}>
+            <div>
+              <label>{'Email: '}</label>
+              <p>
+                <input
+                  type='email'
+                  name='email'
+                  ref='email'
+                  defaultValue={''}
+                />
+              </p>
+              <label>{'Password: '}</label>
+              <p>
+                <input
+                  type='password'
+                  name='password'
+                  ref='password'
+                  defaultValue={''}
+                />
+              </p>
+              <p>
+                <input
+                  onClick={this.attemptSignup}
+                  type='submit'
+                  name='commit'
+                  value='Login'
+                />
+              </p>
+            </div>
+          </form>
 
           <Link to='landing'>
             {'Go back to landing!'}
