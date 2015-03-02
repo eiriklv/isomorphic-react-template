@@ -13,6 +13,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const passport = require('passport');
+const methodOverride = require('method-override');
 
 const app = express();
 
@@ -46,6 +47,8 @@ module.exports.init = function() {
   }));
 
   app.use(cookieParser());
+
+  app.use(methodOverride('_method'));
 
   app.use(session({
     secret: config.get('session.secret'),

@@ -20,7 +20,7 @@ const schema = mongoose.Schema({
 
 schema.statics.findAllByOwner = function(payload, cb) {
   try {
-    userId = ObjectId(payload.userId);
+    var userId = ObjectId(payload.userId);
   } catch (e) {
     return cb('invalid objectid for owner supplied:', e);
   }
@@ -32,8 +32,8 @@ schema.statics.findAllByOwner = function(payload, cb) {
 
 schema.statics.findOneByIdAndOwner = function(payload, cb) {
   try {
-    placeId = ObjectId(payload.placeId);
-    userId = ObjectId(payload.userId);
+    var placeId = ObjectId(payload.placeId);
+    var userId = ObjectId(payload.userId);
   } catch (e) {
     return callback('invalid objectid supplied:', e);
   }

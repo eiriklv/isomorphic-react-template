@@ -4,6 +4,10 @@ const React = require('react');
 const Router = require('react-router');
 const Link = Router.Link;
 
+const qs = require('qs');
+const apiUrl = process.env.API_URL;
+const successRedirect = 'http://localhost:3000/login';
+
 const Navigation = React.createClass({
   contextTypes: {
     Flux: React.PropTypes.object.isRequired,
@@ -35,6 +39,12 @@ const Navigation = React.createClass({
     }.bind(this));
   },
 
+  getServerRedirect: function() {
+    return qs.stringify({
+      redirect: successRedirect
+    });
+  },
+
   render: function() {
     let State = this.props.State;
     let links = this.mapLinks(State.Places.data);
@@ -52,9 +62,15 @@ const Navigation = React.createClass({
             <small>(landing)</small>
           </Link>
           <br />
-          <a href='#' onClick={this.attemptLogout}>
-            <small>(log out)</small>
-          </a>
+
+          <form method='POST' action={apiUrl + '/session?_method=DELETE&' + this.getServerRedirect()}>
+            <input
+              onClick={this.attemptLogout}
+              type='submit'
+              name='commit'
+              value='Log out'
+            />
+          </form>
         </ul>
       </div>
     );

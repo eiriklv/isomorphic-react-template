@@ -15,7 +15,12 @@ exports = module.exports = function(req, res, next) {
     }
 
     req.logIn(user, function(err) {
-      if (err) return next(err);
+      if (err) {
+        return next(err);
+      }
+      if (req.query.redirect) {
+        return res.redirect(req.query.redirect);
+      }
 
       return res.status(200).json({
         user: user,
